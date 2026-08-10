@@ -7,7 +7,7 @@ cask "wallpaper-selector" do
   desc "Native macOS menu-bar wallpaper picker and rotator"
   homepage "https://github.com/wiggly-sheets/wallpaper-selector"
 
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "Wallpaper Selector.app"
 
