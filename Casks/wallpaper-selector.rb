@@ -4,7 +4,7 @@ cask "wallpaper-selector" do
 
   url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}.dmg"
   name "Wallpaper Selector"
-  desc "Native macOS menu-bar wallpaper picker and rotator"
+  desc "Native menu-bar wallpaper picker and rotator"
   homepage "https://github.com/wiggly-sheets/wallpaper-selector"
 
   depends_on macos: :ventura
