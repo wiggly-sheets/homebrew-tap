@@ -6,6 +6,7 @@
 class Tfm < Formula
   desc "Mouse-first terminal file manager"
   homepage "https://github.com/wiggly-sheets/tfm-tui-mac"
+  version "1.0.0"
   sha256 "fbe3a910ebc472411acfe3d5d4d4a31c8dc194f32a1db357dc04bf60d6820a85"
 
   url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v#{version}/tfm-universal-macos.gz"
