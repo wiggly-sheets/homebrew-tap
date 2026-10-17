@@ -6,26 +6,19 @@
 class Tfm < Formula
   desc "Mouse-first terminal file manager"
   homepage "https://github.com/wiggly-sheets/tfm-tui-mac"
+  version "1.0.0"
+  sha256 "fbe3a910ebc472411acfe3d5d4d4a31c8dc194f32a1db357dc04bf60d6820a85"
 
-  on_macos do
-    on_arm:   url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v1.0.0/tfm-aarch64-macos.gz"
-    on_intel: url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v1.0.0/tfm-x86_64-macos.gz"
-  end
+  url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v#{version}/tfm-universal-macos.gz"
+  head "https://github.com/wiggly-sheets/tfm-tui-mac"
 
-  depends_on macos: :monterey
+  depends_on macos: :ventura
 
   def install
-    # Homebrew auto-decompresses .gz; the resulting binary is arch-specific.
-    # Rename it to the canonical `tfm` name in bin/.
-    binary_name = if Hardware::CPU.arm?
-      "tfm-aarch64-macos"
-    else
-      "tfm-x86_64-macos"
-    end
-    bin.install binary_name => "tfm"
+    bin.install "tfm-universal-macos" => "tfm"
   end
 
   test do
-    system "#{bin}/tfm", "--help"
+    system "#{bin}/tfm", "--version"
   end
 end
