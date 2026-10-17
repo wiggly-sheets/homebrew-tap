@@ -10,6 +10,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 | `spacesrenamer` | Give macOS Spaces persistent names in Mission Control |
 | `sketchybar-studio` | Native macOS companion app for editing SketchyBar configs |
 | `spacemap` | Yabai workspace visualizer |
+| `fluor` | Menu bar utility for switching between media keys and F1–F12 keys |
 
 ## Install
 
@@ -27,6 +28,7 @@ brew install --cask wallpaper-selector
 brew install --cask spacesrenamer
 brew install --cask sketchybar-studio
 brew install --cask spacemap
+brew install --cask fluor
 ```
 
 ## Individual Cask Docs
@@ -35,6 +37,7 @@ brew install --cask spacemap
 - [spacesrenamer](docs/spacesrenamer/README.md)
 - [sketchybar-studio](docs/sketchybar-studio/README.md)
 - [spacemap](docs/spacemap/README.md)
+- [fluor](docs/fluor/README.md)
 
 ## Project Repositories
 
