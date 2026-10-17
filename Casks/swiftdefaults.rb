@@ -4,7 +4,7 @@ cask "swiftdefaults" do
 
   url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}.dmg"
   name "SwiftDefaults"
-  desc "Tweak macOS without touching Terminal — browse and toggle system defaults"
+  desc "Tweak without touching Terminal — browse and toggle system defaults"
   homepage "https://github.com/wiggly-sheets/swiftdefaults"
 
   depends_on macos: :sequoia
