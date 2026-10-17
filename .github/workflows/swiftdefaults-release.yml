@@ -38,7 +38,7 @@ jobs:
           cp "$BUILD_DIR/$APP" "$APP_BUNDLE/Contents/MacOS/$APP"
           sed \
             -e 's/$$(EXECUTABLE_NAME)/'"$APP"'/g' \
-            -e 's/$$(PRODUCT_BUNDLE_IDENTIFIER)/com.example.'"$APP"'/g' \
+            -e 's/$$(PRODUCT_BUNDLE_IDENTIFIER)/com.wigglysheets.'"$APP"'/g' \
             -e 's/$$(PRODUCT_NAME)/'"$APP"'/g' \
             "$APP/Info.plist" > "$APP_BUNDLE/Contents/Info.plist"
           cp "$APP/Resources/AppIcon.icns" "$APP_BUNDLE/Contents/Resources/"
