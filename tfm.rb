@@ -9,7 +9,7 @@ class Tfm < Formula
   version "1.0.0"
   sha256 "fbe3a910ebc472411acfe3d5d4d4a31c8dc194f32a1db357dc04bf60d6820a85"
 
-  url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v#{version}/tfm-universal-macos.gz"
+  url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v1.0.0/tfm-universal-macos.gz"
   head "https://github.com/wiggly-sheets/tfm-tui-mac"
 
   depends_on macos: :ventura
