@@ -1,3 +1,4 @@
+# shellcheck disable=SC2016
 name: SwiftDefaults Release
 
 on:
@@ -30,7 +31,6 @@ jobs:
 
       - name: Package .app bundle
         run: |
-          # shellcheck disable=SC2016
           APP=SwiftDefaults
           BUILD_DIR=.build/release
           APP_BUNDLE=$APP.app
