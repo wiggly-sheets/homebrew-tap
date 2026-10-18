@@ -1,5 +1,6 @@
 cask "fluor" do
   version "2.7.0"
+
   url "https://github.com/wiggly-sheets/Fluor/releases/download/v#{version}/Fluor.dmg"
   sha256 "522894d5b8c0b7bfddc584b7e03a114f9e7bb74876c6c0cb7f4943aa8289f850"
 
