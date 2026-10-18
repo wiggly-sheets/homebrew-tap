@@ -1,8 +1,8 @@
 cask "wallpaper-selector" do
   version "1.0.0"
+  url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}.dmg"
   sha256 "b65449be8b147200525ea53a2342be062012c27d8115bf0c34c0c7b0e309d7da"
 
-  url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}.dmg"
   name "Wallpaper Selector"
   desc "Native menu-bar wallpaper picker and rotator"
   homepage "https://github.com/wiggly-sheets/wallpaper-selector"

@@ -1,10 +1,10 @@
 cask "swiftdefaults" do
   version "1.0.0"
+  url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}.dmg"
   sha256 "39f168331f0e659c6f4d3a9b866ff7ae64bfeb6e47bc960aad7cef1b6d43195a"
 
-  url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}.dmg"
   name "SwiftDefaults"
-  desc "Tweak without touching Terminal — browse and toggle system defaults"
+  desc "GUI for managing macOS defaults"
   homepage "https://github.com/wiggly-sheets/swiftdefaults"
 
   depends_on macos: :sequoia

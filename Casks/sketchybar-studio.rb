@@ -1,10 +1,10 @@
 cask "sketchybar-studio" do
   version "1.0.1"
+  url "https://github.com/wiggly-sheets/SketchyBar-Studio/releases/download/v#{version}/SketchyBarStudio-#{version}-universal.dmg"
   sha256 "5ab3c436afb5fe7f3e55ebf71daabf7024dc1ca0d0d19a9756d870f79f935781"
 
-  url "https://github.com/wiggly-sheets/SketchyBar-Studio/releases/download/v#{version}/SketchyBarStudio-#{version}-universal.dmg"
   name "SketchyBar Studio"
-  desc "Native companion app for editing SketchyBar configs"
+  desc "Preview and edit SketchyBar configs in real time"
   homepage "https://github.com/wiggly-sheets/SketchyBar-Studio"
 
   depends_on macos: :sonoma
