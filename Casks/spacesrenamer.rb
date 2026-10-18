@@ -12,9 +12,9 @@
 
 cask "spacesrenamer" do
   version "1.0.1"
-  url "https://github.com/wiggly-sheets/spaces-renamer/releases/download/v#{version}/SpacesRenamer-v#{version}.dmg"
   sha256 "0bdc9382a76299fc0f292a2fa988dff66bd53df3f3a8a07aa8c195ad0b0e26ec"
 
+  url "https://github.com/wiggly-sheets/spaces-renamer/releases/download/v#{version}/SpacesRenamer-v#{version}.dmg"
   name "Spaces Renamer"
   desc "Give Spaces persistent names in Mission Control"
   homepage "https://github.com/wiggly-sheets/spaces-renamer"
