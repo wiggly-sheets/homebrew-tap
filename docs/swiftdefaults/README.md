@@ -19,12 +19,12 @@ SwiftDefaults is a native Mac utility for browsing and toggling macOS system def
 
 ## Features
 
-- **96 tweaks across 21 categories** — Dock, Finder, Screenshots, Window Manager, Keyboard, and more
+- **93 tweaks across 21 categories** — Dock, Finder, Screenshots, Window Manager, Keyboard, and more
 - **Human-readable titles** — each tweak has a plain-English description
-- **Sidebar navigation** with category counts and search across title, description, and key
-- **One-click toggles** — flip a switch to write the new value via `/usr/bin/defaults`
-- **Live state** — each launch reads current values with `defaults read`
-- **Revert safety** — first toggle captures the original value; Revert restores it or deletes the key when it did not exist
+- **Sidebar navigation** with category counts and search across title, description, key, category, domain and id
+- **Staged edits, one Apply** — flip a switch to stage the new value; one Apply writes every staged value via `/usr/bin/defaults`
+- **Live state** — each launch reads current values with one `defaults export <domain> -` per domain
+- **Revert safety** — the value present at launch is captured; Revert restores it or deletes the key when it did not exist
 - **Restart guidance** — rows declaring `appToRestart` show "Takes effect after X relaunches"
 
 ## Requirements
