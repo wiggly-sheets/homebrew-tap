@@ -1,4 +1,4 @@
-# This is the tap's fluor cask — the copy in the tap is generated from automation/templates/fluor.rb, so change the template.
+# The tap's fluor cask comes from automation/templates/fluor.rb. Edit the template to change it.
 cask "fluor" do
   version "2.7.0"
   sha256 "522894d5b8c0b7bfddc584b7e03a114f9e7bb74876c6c0cb7f4943aa8289f850"

@@ -1,4 +1,4 @@
-# This is the tap's spacesrenamer cask — the copy in the tap is generated from automation/templates/spacesrenamer.rb, so change the template.
+# The tap's spacesrenamer cask comes from automation/templates/spacesrenamer.rb. Edit the template to change it.
 # Homebrew formula for Spaces Renamer
 #
 # Install from the consolidated tap:
