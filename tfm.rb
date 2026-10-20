@@ -1,3 +1,4 @@
+# This is the tap's tfm formula — the copy in the tap is generated from automation/templates/tfm.rb, so change the template.
 # Homebrew formula for tfm-tui-mac.
 #
 # tfm is a CLI tool, not a GUI app, so it is a formula rather than a cask.
