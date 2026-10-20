@@ -16,7 +16,7 @@ cask "spacesrenamer" do
 
   url "https://github.com/wiggly-sheets/spaces-renamer/releases/download/v#{version}/SpacesRenamer-v#{version}.dmg"
   name "Spaces Renamer"
-  desc "Give macOS Spaces persistent names in Mission Control"
+  desc "Give Spaces persistent names in Mission Control"
   homepage "https://github.com/wiggly-sheets/spaces-renamer"
 
   depends_on arch: :arm64
@@ -25,8 +25,8 @@ cask "spacesrenamer" do
   app "SpacesRenamer.app"
 
   zap trash: [
+    "~/.config/spacesrenamer",
     "~/Library/Application Support/SpacesRenamer",
     "~/Library/Containers/com.alexbeals.spacesrenamer",
-    "~/.config/spacesrenamer",
   ]
 end
