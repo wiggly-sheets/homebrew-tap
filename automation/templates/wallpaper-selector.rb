@@ -1,4 +1,5 @@
-# This is the tap's wallpaper-selector cask — the copy in the tap is generated from automation/templates/wallpaper-selector.rb, so change the template.
+# frozen_string_literal: true
+# The tap's wallpaper-selector cask comes from automation/templates/wallpaper-selector.rb. Edit the template to change it.
 cask "wallpaper-selector" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

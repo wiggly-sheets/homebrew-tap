@@ -1,4 +1,5 @@
-# This is the tap's spacemap cask — the copy in the tap is generated from automation/templates/spacemap.rb, so change the template.
+# frozen_string_literal: true
+# The tap's spacemap cask comes from automation/templates/spacemap.rb. Edit the template to change it.
 cask "spacemap" do
   arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 

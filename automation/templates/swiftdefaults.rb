@@ -1,4 +1,5 @@
-# This is the tap's swiftdefaults cask — the copy in the tap is generated from automation/templates/swiftdefaults.rb, so change the template.
+# frozen_string_literal: true
+# The tap's swiftdefaults cask comes from automation/templates/swiftdefaults.rb. Edit the template to change it.
 cask "swiftdefaults" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

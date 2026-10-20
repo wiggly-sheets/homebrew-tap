@@ -230,20 +230,32 @@ render_template() {
 		shift 2
 		expressions+=(-e "s|${placeholder}|$(escape_replacement "$value")|g")
 	done
-	sed "${expressions[@]}" "$template" >"$output"
+	strip_frozen_string_literal "$template" | sed "${expressions[@]}" >"$output"
+}
+
+# The template carries a frozen string literal comment, because the lint of the
+# tap accepts the template only with that comment. The rendered cask must not
+# freeze its strings, so the comment is removed before the template is
+# rendered.
+strip_frozen_string_literal() {
+	sed '1{/^# frozen_string_literal: true$/d;}' "$1"
 }
 
 # Every generated tap file starts with a marker line that names the template it
 # comes from. The marker is the first line of the file when it starts with the
 # marker prefix.
-marker_prefix="# This is the tap's "
+marker_prefix="# The tap's "
+
+# Tap files that were written before the marker changed still carry the old
+# wording. The generator reads them, so it recognises both wordings.
+legacy_marker_prefix="# This is the tap's "
 
 # has_marker_line reports whether the file starts with a marker line.
 has_marker_line() {
 	local first_line=""
 	read -r first_line <"$1" || true
 	case "$first_line" in
-	"$marker_prefix"*) return 0 ;;
+	"$marker_prefix"* | "$legacy_marker_prefix"*) return 0 ;;
 	esac
 	return 1
 }

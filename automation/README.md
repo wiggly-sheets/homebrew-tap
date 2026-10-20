@@ -50,13 +50,54 @@ stops instead of committing it.
 
 Every generated tap file starts with a marker line that names the template it
 comes from. The marker tells a reader that the file is generated output and
-points them at the template, which is the file to edit.
+points them at the template, which is the file to edit. For the cask of fluor
+the marker reads:
+
+    # The tap's fluor cask comes from automation/templates/fluor.rb. Edit the template to change it.
+
+To change a cask or a formula, edit its template and run the generator again.
+The next write puts the new text into the tap.
 
 The generator compares the body of the tap file with the body of the template,
 after it removes the marker line from both sides. When the bodies are equal and
 the tap file has no marker line yet, the next write adds the marker line to the
 tap file. When the bodies differ, the run fails and writes nothing, so a hand
 edited tap file or a stale template is never overwritten silently.
+
+## The templates and the lint
+
+The tap's own CI runs `brew style` on the whole tap, so the templates are
+linted as well. Homebrew's RuboCop configuration only allows the frozen string
+literal comment to be missing from files that live under a `Casks` or a
+`Formula` directory, and the templates live in `automation/templates`. Every
+template therefore starts with this line:
+
+    # frozen_string_literal: true
+
+The rendered tap file must not carry that comment. Homebrew's own cask files do
+not freeze their strings, and a frozen string in a cask can break the cask DSL
+at runtime. The generator removes the comment from the template before it
+renders it, so the file in the tap starts with the marker line and holds no
+frozen string literal comment.
+
+## Reproducing the lint locally
+
+`brew style <tap-name>` lints the tap clone that Homebrew keeps under its
+Library/Taps directory, and Homebrew's RuboCop configuration excludes the
+Sorbet sigil cops for everything in that tap. Running `brew style .` in a
+working copy outside that directory reports Sorbet sigil complaints for the
+templates that the tap's CI does not report, so the two runs do not agree.
+
+Use a scratch tap under the Homebrew Library/Taps directory when the exact CI
+verdict matters:
+
+    mkdir -p /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
+    cp -R . /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
+    cd /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
+    git init
+    brew style zzscratch/tap
+
+Remove the scratch directory when you are done with it.
 
 ## The daily schedule
 
