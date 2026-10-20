@@ -1,6 +1,6 @@
-# Homebrew Tap for Spaces Renamer
+# Spaces Renamer
 
-Install Spaces Renamer from this custom Homebrew tap.
+Spaces Renamer ships as a cask in the `wiggly-sheets/homebrew-tap` tap, the one tap that holds every wiggly-sheets product.
 
 ## Install
 
@@ -10,21 +10,19 @@ brew trust wiggly-sheets/homebrew-tap
 brew install --cask spacesrenamer
 ```
 
-Or install directly:
-
-```bash
-brew tap wiggly-sheets/homebrew-tap
-brew trust wiggly-sheets/homebrew-tap
-brew install --cask wiggly-sheets/homebrew-tap/spacesrenamer
-```
-
 ## What is Spaces Renamer?
 
 Give macOS Spaces persistent names in Mission Control.
 
+## How the tap stays current
+
+The tap renders this cask from its own template, `automation/templates/spacesrenamer.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.
+
+The rules for the tap live in `AGENTS.md`. The mechanics of the generator live in `automation/README.md`.
+
 ## Updating
 
-When a new version is released, update the tap:
+When a new version is released, upgrade the app:
 
 ```bash
 brew upgrade --cask spacesrenamer

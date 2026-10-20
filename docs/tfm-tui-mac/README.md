@@ -1,16 +1,13 @@
-# Homebrew tap for tfm-tui-mac
+# tfm
 
-Install tfm via Homebrew:
+tfm ships as a formula in the `wiggly-sheets/homebrew-tap` tap, the one tap that holds every wiggly-sheets product.
+
+## Install
 
 ```bash
 brew tap wiggly-sheets/homebrew-tap
+brew trust wiggly-sheets/homebrew-tap
 brew install tfm
-```
-
-Or in one step:
-
-```bash
-brew install wiggly-sheets/homebrew-tap/tfm
 ```
 
 > **Note:** tfm is a CLI tool, not a GUI app. It is distributed as a Homebrew **formula**, not a cask.
@@ -40,9 +37,15 @@ brew uninstall tfm
 brew untap wiggly-sheets/homebrew-tap
 ```
 
+## How the tap stays current
+
+The tap renders this formula from its own template, `automation/templates/tfm.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.
+
+The rules for the tap live in `AGENTS.md`. The mechanics of the generator live in `automation/README.md`.
+
 ## Updating
 
-When a new version is released, update the tap:
+When a new version is released, upgrade the app:
 
 ```bash
 brew upgrade tfm

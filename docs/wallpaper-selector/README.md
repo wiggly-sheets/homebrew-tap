@@ -1,6 +1,6 @@
-# Homebrew Tap for Wallpaper Selector
+# Wallpaper Selector
 
-Install Wallpaper Selector from this custom Homebrew tap.
+Wallpaper Selector ships as a cask in the `wiggly-sheets/homebrew-tap` tap, the one tap that holds every wiggly-sheets product.
 
 ## Install
 
@@ -10,21 +10,19 @@ brew trust wiggly-sheets/homebrew-tap
 brew install --cask wallpaper-selector
 ```
 
-Or install directly:
-
-```bash
-brew tap wiggly-sheets/homebrew-tap
-brew trust wiggly-sheets/homebrew-tap
-brew install --cask wiggly-sheets/homebrew-tap/wallpaper-selector
-```
-
 ## What is Wallpaper Selector?
 
 A native macOS menu-bar wallpaper picker and rotator.
 
+## How the tap stays current
+
+The tap renders this cask from its own template, `automation/templates/wallpaper-selector.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.
+
+The rules for the tap live in `AGENTS.md`. The mechanics of the generator live in `automation/README.md`.
+
 ## Updating
 
-When a new version is released, update the tap:
+When a new version is released, upgrade the app:
 
 ```bash
 brew upgrade --cask wallpaper-selector

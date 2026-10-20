@@ -1,16 +1,13 @@
-# Homebrew tap for fluor
+# fluor
 
-Install fluor via Homebrew:
+fluor ships as a cask in the `wiggly-sheets/homebrew-tap` tap, the one tap that holds every wiggly-sheets product.
+
+## Install
 
 ```bash
 brew tap wiggly-sheets/homebrew-tap
+brew trust wiggly-sheets/homebrew-tap
 brew install --cask fluor
-```
-
-Or in one step:
-
-```bash
-brew install wiggly-sheets/homebrew-tap/fluor
 ```
 
 ## What is fluor?
@@ -39,9 +36,15 @@ brew uninstall --cask fluor
 brew untap wiggly-sheets/homebrew-tap
 ```
 
+## How the tap stays current
+
+The tap renders this cask from its own template, `automation/templates/fluor.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.
+
+The rules for the tap live in `AGENTS.md`. The mechanics of the generator live in `automation/README.md`.
+
 ## Updating
 
-When a new version is released, update the tap:
+When a new version is released, upgrade the app:
 
 ```bash
 brew upgrade --cask fluor
