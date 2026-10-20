@@ -5,6 +5,16 @@ on:
     branches:
       - main
   pull_request:
+  # The daily sync pushes to this tap with the repository's own token, and
+  # GitHub does not start a workflow for a push made that way. Without the
+  # triggers below these checks would never run on the commit the daily sync
+  # makes, and a change that reached the tap untested would go unnoticed.
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - sync tap with upstream releases
+    types:
+      - completed
 
 jobs:
   test-bot:
