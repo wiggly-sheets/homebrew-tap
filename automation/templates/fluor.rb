@@ -1,4 +1,4 @@
-# Template for the tap's fluor cask. Rendered by automation/sync-tap.sh — edit here, never in the tap file.
+# This is the tap's fluor cask — the copy in the tap is generated from automation/templates/fluor.rb, so change the template.
 cask "fluor" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

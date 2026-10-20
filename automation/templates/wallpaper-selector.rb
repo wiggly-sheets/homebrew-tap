@@ -1,4 +1,4 @@
-# Template for the tap's wallpaper-selector cask. Rendered by automation/sync-tap.sh — edit here, never in the tap file.
+# This is the tap's wallpaper-selector cask — the copy in the tap is generated from automation/templates/wallpaper-selector.rb, so change the template.
 cask "wallpaper-selector" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

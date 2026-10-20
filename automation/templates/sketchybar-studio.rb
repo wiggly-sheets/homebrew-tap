@@ -1,4 +1,4 @@
-# Template for the tap's sketchybar-studio cask. Rendered by automation/sync-tap.sh — edit here, never in the tap file.
+# This is the tap's sketchybar-studio cask — the copy in the tap is generated from automation/templates/sketchybar-studio.rb, so change the template.
 cask "sketchybar-studio" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

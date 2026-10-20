@@ -233,6 +233,31 @@ render_template() {
 	sed "${expressions[@]}" "$template" >"$output"
 }
 
+# Every generated tap file starts with a marker line that names the template it
+# comes from. The marker is the first line of the file when it starts with the
+# marker prefix.
+marker_prefix="# This is the tap's "
+
+# has_marker_line reports whether the file starts with a marker line.
+has_marker_line() {
+	local first_line=""
+	read -r first_line <"$1" || true
+	case "$first_line" in
+	"$marker_prefix"*) return 0 ;;
+	esac
+	return 1
+}
+
+# strip_marker prints the file without its marker line. A file without a marker
+# line is printed as it is.
+strip_marker() {
+	if has_marker_line "$1"; then
+		tail -n +2 "$1"
+	else
+		cat "$1"
+	fi
+}
+
 # lint_rendered checks the rendered file. The Ruby syntax check comes first and
 # the Homebrew style check runs on the file at its final path inside the copy
 # of the tap, so that the cops see the same layout they would see in the tap.
@@ -464,17 +489,31 @@ sync_product() {
 	if [ -f "$repo_root/$product_target" ]; then
 		if diff -u --label "$product_target (current tap file)" --label "$product_target (rendered)" \
 			"$repo_root/$product_target" "$rendered" >"$work_dir/diff.txt" 2>&1; then
-			printf '  Rendered file: unchanged\n'
+			printf '  Rendered file: identical to the tap file\n'
 		else
-			if diff -u <(tail -n +2 "$rendered") "$repo_root/$product_target" >"$work_dir/diff-header.txt" 2>&1; then
-				printf '  Rendered file: differs from the tap only by the template header comment\n'
+			# The marker line is the only difference the generator is allowed to
+			# fix on its own. Any other difference in the body means that the tap
+			# file was edited by hand or that the template is stale.
+			strip_marker "$rendered" >"$work_dir/rendered-body.txt"
+			strip_marker "$repo_root/$product_target" >"$work_dir/tap-body.txt"
+			if diff -u "$work_dir/tap-body.txt" "$work_dir/rendered-body.txt" >/dev/null 2>&1; then
+				printf '  Rendered file: differs from the tap only by the generated marker\n'
+				if has_marker_line "$repo_root/$product_target"; then
+					printf '  The next write updates the marker line in the tap file.\n'
+				else
+					printf '  The next write adds the marker line to the tap file.\n'
+				fi
+				printf '  Diff against the current tap file:\n'
+				sed 's/^/    /' "$work_dir/diff.txt"
+				products_changed=$((products_changed + 1))
+				changed_products+=("$product_name $version")
 			else
-				printf '  Rendered file: differs from the tap in more than the template header comment\n'
+				printf '  Rendered file: differs from the tap in more than the marker\n'
+				printf '  Diff against the current tap file:\n'
+				sed 's/^/    /' "$work_dir/diff.txt"
+				printf '  Result: FAILED, the tap file and the template differ in more than the marker, so nothing was written.\n'
+				return 1
 			fi
-			printf '  Diff against the current tap file:\n'
-			sed 's/^/    /' "$work_dir/diff.txt"
-			products_changed=$((products_changed + 1))
-			changed_products+=("$product_name $version")
 		fi
 	else
 		diff -u --label "$product_target (current tap file)" --label "$product_target (rendered)" \

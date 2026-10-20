@@ -1,4 +1,4 @@
-# Template for the tap's swiftdefaults cask. Rendered by automation/sync-tap.sh — edit here, never in the tap file.
+# This is the tap's swiftdefaults cask — the copy in the tap is generated from automation/templates/swiftdefaults.rb, so change the template.
 cask "swiftdefaults" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

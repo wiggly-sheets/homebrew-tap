@@ -48,6 +48,16 @@ the digest GitHub reports. Homebrew's own CI does not validate digests, so a
 mismatch means the tap would publish a file that nobody can verify, and the run
 stops instead of committing it.
 
+Every generated tap file starts with a marker line that names the template it
+comes from. The marker tells a reader that the file is generated output and
+points them at the template, which is the file to edit.
+
+The generator compares the body of the tap file with the body of the template,
+after it removes the marker line from both sides. When the bodies are equal and
+the tap file has no marker line yet, the next write adds the marker line to the
+tap file. When the bodies differ, the run fails and writes nothing, so a hand
+edited tap file or a stale template is never overwritten silently.
+
 ## The daily schedule
 
 The daily schedule lives in `.github/workflows/sync-tap.yml`. The workflow runs
