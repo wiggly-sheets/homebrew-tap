@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 # The tap's tfm formula comes from automation/templates/tfm.rb. Edit the template to change it.
+# rubocop:disable FormulaAudit/Checksum, FormulaAudit/ChecksumCase, Lint/DuplicateMethods
 # Homebrew formula for tfm-tui-mac.
 #
 # tfm is a CLI tool, not a GUI app, so it is a formula rather than a cask.
@@ -23,3 +25,4 @@ class Tfm < Formula
     system "#{bin}/tfm", "--version"
   end
 end
+# rubocop:enable FormulaAudit/Checksum, FormulaAudit/ChecksumCase, Lint/DuplicateMethods

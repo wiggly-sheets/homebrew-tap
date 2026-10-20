@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # The tap's spacesrenamer cask comes from automation/templates/spacesrenamer.rb. Edit the template to change it.
 # Homebrew formula for Spaces Renamer
 #

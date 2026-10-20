@@ -1,0 +1,12 @@
+# ShellCheck settings for this tap.
+#
+# SC2310, SC2311 and SC2312 report that the set -e behaviour of a script
+# changes when a function runs in a condition or in a command substitution.
+# The generator calls its own functions in conditions on purpose, so these
+# three checks are turned off here. Homebrew's own shell scripts use the same
+# three exceptions, in the .shellcheckrc of the Homebrew repository. Keeping
+# the same exceptions means that a local shellcheck run and the run of the
+# tap's CI report the same findings.
+disable=SC2310
+disable=SC2311
+disable=SC2312

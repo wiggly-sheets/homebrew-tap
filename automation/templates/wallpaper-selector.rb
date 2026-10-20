@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # The tap's wallpaper-selector cask comes from automation/templates/wallpaper-selector.rb. Edit the template to change it.
 cask "wallpaper-selector" do
   version "VERSION_PLACEHOLDER"

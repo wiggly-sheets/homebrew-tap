@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # The tap's fluor cask comes from automation/templates/fluor.rb. Edit the template to change it.
 cask "fluor" do
   version "VERSION_PLACEHOLDER"

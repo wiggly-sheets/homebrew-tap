@@ -70,15 +70,42 @@ The tap's own CI runs `brew style` on the whole tap, so the templates are
 linted as well. Homebrew's RuboCop configuration only allows the frozen string
 literal comment to be missing from files that live under a `Casks` or a
 `Formula` directory, and the templates live in `automation/templates`. Every
-template therefore starts with this line:
+template therefore starts with the frozen string literal comment and an empty
+line:
 
     # frozen_string_literal: true
 
-The rendered tap file must not carry that comment. Homebrew's own cask files do
-not freeze their strings, and a frozen string in a cask can break the cask DSL
-at runtime. The generator removes the comment from the template before it
-renders it, so the file in the tap starts with the marker line and holds no
-frozen string literal comment.
+The empty line is required as well: Homebrew's RuboCop configuration wants an
+empty line after the magic comment.
+
+The rendered tap file must carry neither the comment nor the empty line.
+Homebrew's own cask files do not freeze their strings, and a frozen string in a
+cask can break the cask DSL at runtime. The generator removes the comment and
+the empty line from the template before it renders it, so the file in the tap
+starts with the marker line and holds no frozen string literal comment.
+
+A template also holds the RuboCop directives that the template itself needs.
+The formula of tfm carries this directive:
+
+    # rubocop:disable FormulaAudit/Checksum, FormulaAudit/ChecksumCase, Lint/DuplicateMethods
+
+The digest of a template is a placeholder and not a real sha256, so the
+`FormulaAudit` cops would report it. The formula of the template and the
+formula in the tap hold the same method, so the `Lint/DuplicateMethods` cop
+would report the method of the template as a duplicate. The directive turns
+both reports off for the template. The generator removes the directives before
+it renders a template, so they never reach the tap.
+
+## The shell script and the lint
+
+The tap's CI runs ShellCheck and shfmt on `automation/sync-tap.sh`. The script
+is formatted the way Homebrew formats its own shell scripts: two spaces of
+indentation and `then` and `do` on a line of their own. The file
+`.shellcheckrc` in the root of the tap turns off the same three ShellCheck
+checks that Homebrew turns off for its own scripts. The generator calls its own
+functions in conditions on purpose, and ShellCheck reports that as a problem.
+The file makes a local ShellCheck run report the same findings as the run of
+the tap's CI.
 
 ## Reproducing the lint locally
 
