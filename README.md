@@ -6,12 +6,12 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `wallpaper-selector` | cask | Native macOS menu-bar wallpaper picker and rotator |
-| `spacesrenamer` | cask | Give macOS Spaces persistent names in Mission Control |
-| `sketchybar-studio` | cask | Native macOS companion app for editing SketchyBar configs |
-| `spacemap` | cask | Yabai workspace visualizer |
-| `fluor` | cask | Menu bar utility for switching between media keys and F1–F12 keys |
-| `swiftdefaults` | cask | Tweak macOS without touching Terminal — browse and toggle system defaults |
+| `wallpaper-selector` | cask | Native menu-bar wallpaper picker and rotator |
+| `spacesrenamer` | cask | Give Spaces persistent names in Mission Control |
+| `sketchybar-studio` | cask | Preview and edit SketchyBar configs in real time |
+| `spacemap` | cask | Visualize spaces as an interactive map |
+| `fluor` | cask | Make your function keys fit the app you're using |
+| `swiftdefaults` | cask | GUI for managing defaults |
 | `tfm` | formula | Mouse-first terminal file manager |
 
 ## Install
