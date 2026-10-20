@@ -20,7 +20,10 @@ jobs:
   test-bot:
     strategy:
       matrix:
-        os: [ macos-15-intel, macos-26 ]
+        # The tap syntax check does not depend on the machine it runs on, and the
+        # container carries the linters, so the macOS runners only matter for the
+        # pull request build.
+        os: ${{ fromJSON(github.event_name == 'pull_request' && '["macos-15-intel", "macos-26", "ubuntu-latest"]' || '["ubuntu-latest"]') }}
         include:
           - os: ubuntu-latest
             container: ghcr.io/homebrew/brew:main
@@ -59,7 +62,7 @@ jobs:
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: bottles_${{ matrix.os }}
           path: '*.bottle.*'
