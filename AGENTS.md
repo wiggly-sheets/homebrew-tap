@@ -57,15 +57,17 @@ Keep to these rules in the template of a new product.
 
 Run the generator in dry run mode. `automation/sync-tap.sh --dry-run` resolves every product, cross-checks the digests, renders the templates and lints the result in a temporary copy of the tap, and it writes nothing. Add `--product <product>` to look at a single product. Do not run `--apply` by hand: that mode writes the files, commits them and pushes to `main`, and the daily job owns that.
 
-Run the lint the way the CI runs it. A lint outside the Library directory of Homebrew reports findings that the CI does not report, so copy the working tree into a scratch tap first:
+Run the lint the way the CI runs it. A lint outside the Library directory of Homebrew reports findings that the CI does not report, so put the committed files into a scratch tap first:
 
 ```
 mkdir -p /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
-cp -R . /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
+git archive HEAD | tar -x -C /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
 cd /opt/homebrew/Library/Taps/zzscratch/homebrew-tap
 git init
 brew style zzscratch/tap
 ```
+
+The scratch tap must hold the committed files, because the CI checks out the commit, and a file that is not committed is not linted by the CI.
 
 Remove the scratch directory when you are done with it.
 

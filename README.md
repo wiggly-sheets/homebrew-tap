@@ -14,6 +14,12 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 | `swiftdefaults` | cask | GUI for managing defaults |
 | `tfm` | formula | Mouse-first terminal file manager |
 
+## Where the tap files come from
+
+Every cask and the formula in this tap are generated output. The tap renders them from the templates in `automation/templates/` and follows the latest stable release of each upstream repository, so a new release reaches the tap without a manual step.
+
+The rules for the tap live in [AGENTS.md](AGENTS.md). The mechanics of the generator live in [automation/README.md](automation/README.md).
+
 ## Install
 
 Tap the repository and trust it:
@@ -35,7 +41,7 @@ brew install --cask swiftdefaults
 brew install tfm
 ```
 
-## Individual Cask Docs
+## Individual Product Docs
 
 - [wallpaper-selector](docs/wallpaper-selector/README.md)
 - [spacesrenamer](docs/spacesrenamer/README.md)
