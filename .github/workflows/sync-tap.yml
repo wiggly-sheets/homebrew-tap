@@ -1,0 +1,36 @@
+# This job syncs the casks and the formula of the tap with the latest upstream
+# releases once a day. The generator refuses to write when the published
+# checksum sidecar disagrees with the digest GitHub reports, so a release with
+# a bad checksum never reaches the tap.
+name: "sync tap with upstream releases"
+
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-tap:
+    runs-on: macos-15
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the tap
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set the commit identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync the tap with the upstream releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: automation/sync-tap.sh --apply

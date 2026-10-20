@@ -639,6 +639,14 @@ git -C "$repo_root" add -- "${apply_targets[@]}"
 	done
 } >"$work_dir/commit-message.txt"
 
+# A fresh machine has no git identity, and the commit would fail without one.
+# An identity that the repository already has is never changed.
+current_email="$(git -C "$repo_root" config user.email 2>/dev/null || true)"
+if [ -z "$current_email" ]; then
+	git -C "$repo_root" config user.name "tap-sync-bot"
+	git -C "$repo_root" config user.email "tap-sync-bot@users.noreply.github.com"
+fi
+
 git -C "$repo_root" commit --file="$work_dir/commit-message.txt"
 
 git -C "$repo_root" fetch origin main

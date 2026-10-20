@@ -50,5 +50,7 @@ stops instead of committing it.
 
 ## The daily schedule
 
-The daily schedule lives in `.github/workflows/sync-tap.yml`, which is added in a
-later slice. Until that workflow exists, run the generator by hand.
+The daily schedule lives in `.github/workflows/sync-tap.yml`. The workflow runs
+once a day at 11:00 UTC. The same job can also be started by hand from the
+Actions tab, which is what you do when you want the tap refreshed before the
+next scheduled run.
