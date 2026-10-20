@@ -1,0 +1,106 @@
+{
+  "products": [
+    {
+      "name": "fluor",
+      "repo": "wiggly-sheets/fluor",
+      "template": "automation/templates/fluor.rb",
+      "target": "Casks/fluor.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "Fluor.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "checksums.txt"
+    },
+    {
+      "name": "sketchybar-studio",
+      "repo": "wiggly-sheets/SketchyBar-Studio",
+      "template": "automation/templates/sketchybar-studio.rb",
+      "target": "Casks/sketchybar-studio.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "SketchyBarStudio-{version}-universal.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "SketchyBarStudio-{version}-universal.dmg.sha256"
+    },
+    {
+      "name": "spacemap",
+      "repo": "wiggly-sheets/Spacemap",
+      "template": "automation/templates/spacemap.rb",
+      "target": "Casks/spacemap.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "spacemap-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "spacemap-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "checksums.txt"
+    },
+    {
+      "name": "spacesrenamer",
+      "repo": "wiggly-sheets/spaces-renamer",
+      "template": "automation/templates/spacesrenamer.rb",
+      "target": "Casks/spacesrenamer.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "SpacesRenamer-v{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "SpacesRenamer-v{version}.dmg.sha256"
+    },
+    {
+      "name": "swiftdefaults",
+      "repo": "wiggly-sheets/swiftdefaults",
+      "template": "automation/templates/swiftdefaults.rb",
+      "target": "Casks/swiftdefaults.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "SwiftDefaults-{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "SwiftDefaults-{version}.dmg.sha256"
+    },
+    {
+      "name": "wallpaper-selector",
+      "repo": "wiggly-sheets/wallpaper-selector",
+      "template": "automation/templates/wallpaper-selector.rb",
+      "target": "Casks/wallpaper-selector.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "WallpaperSelector-{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "WallpaperSelector-{version}.dmg.sha256"
+    },
+    {
+      "name": "tfm",
+      "repo": "wiggly-sheets/tfm-tui-mac",
+      "template": "automation/templates/tfm.rb",
+      "target": "tfm.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "tfm-universal-macos.gz",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "tfm-universal-macos.gz.sha256"
+    }
+  ]
+}
