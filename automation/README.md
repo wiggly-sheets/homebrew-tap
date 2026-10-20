@@ -32,6 +32,12 @@ to the repository. This is the default mode.
 files into the repository, commits, and pushes to `main` with a fast-forward
 only.
 
+A product that fails is skipped. The file of a skipped product is never written
+into the tap, and the other products sync as usual. The report names the
+skipped products, the commit that the apply step makes names them too, and the
+run ends with a non-zero exit code, so that the daily job turns red. A skipped
+product keeps the version it has in the tap until someone fixes it.
+
 `automation/sync-tap.sh --product <name>` restricts the run to one product, which
 is how you test a single product. It combines with either `--dry-run` or
 `--apply`.
@@ -43,10 +49,11 @@ product copy stays in the template and is curated by hand. If you want to change
 the wording of a cask description, you change the template and the next run
 carries that change into the tap.
 
-The generator refuses to write when the release checksum sidecar disagrees with
-the digest GitHub reports. Homebrew's own CI does not validate digests, so a
-mismatch means the tap would publish a file that nobody can verify, and the run
-stops instead of committing it.
+The generator refuses to write a product when the release checksum sidecar
+disagrees with the digest GitHub reports. Homebrew's own CI does not validate
+digests, so a mismatch means the tap would publish a file that nobody can
+verify. The product is skipped, the other products still sync, and the run ends
+with a non-zero exit code.
 
 Every generated tap file starts with a marker line that names the template it
 comes from. The marker tells a reader that the file is generated output and
@@ -61,8 +68,10 @@ The next write puts the new text into the tap.
 The generator compares the body of the tap file with the body of the template,
 after it removes the marker line from both sides. When the bodies are equal and
 the tap file has no marker line yet, the next write adds the marker line to the
-tap file. When the bodies differ, the run fails and writes nothing, so a hand
-edited tap file or a stale template is never overwritten silently.
+tap file. When the bodies differ, the product is skipped and its file is left
+alone, so a hand edited tap file or a stale template is never overwritten
+silently. The other products still sync and the run ends with a non-zero exit
+code.
 
 ## The templates and the lint
 

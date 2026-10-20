@@ -12,6 +12,9 @@
 #   automation/sync-tap.sh --dry-run --product fluor  Do the same for one product only.
 #   automation/sync-tap.sh --apply                    Do the same, then write, commit and push to main.
 #
+# A product that fails is skipped. Its file is never written, the other
+# products still sync and the run ends with a non-zero exit code.
+#
 # It needs gh (authenticated), python3, awk, sed, grep, git and brew.
 
 set -euo pipefail
@@ -31,6 +34,9 @@ Usage: ${program_name} [--dry-run | --apply] [--product <name>]
              them and push the commit to the main branch of origin.
   --product  Restrict the run to one product from the configuration. It works
              with either mode.
+
+A product that fails is skipped. Its file is never written, the other
+products still sync and the run ends with a non-zero exit code.
 EOF
 }
 
@@ -328,6 +334,8 @@ products_changed=0
 cross_checks_matched=0
 changed_products=()
 apply_targets=()
+skipped_products=()
+write_targets=()
 
 reset_product() {
   product_name=""
@@ -345,6 +353,7 @@ reset_product() {
 sync_product() {
   local tag version pattern filename entry digest sidecar_filename sidecar_entry
   local sidecar_path sidecar_digest rendered relative_path status index lint_cops
+  local pending_change=""
   local -a digests=()
   local -a substitutions=()
 
@@ -569,8 +578,7 @@ sync_product() {
         fi
         printf '  Diff against the current tap file:\n'
         sed 's/^/    /' "${work_dir}/diff.txt"
-        products_changed=$((products_changed + 1))
-        changed_products+=("${product_name} ${version}")
+        pending_change="yes"
       else
         printf '  Rendered file: differs from the tap in more than the marker\n'
         printf '  Diff against the current tap file:\n'
@@ -585,8 +593,7 @@ sync_product() {
     printf '  Rendered file: new, the tap has no %s yet\n' "${product_target}"
     printf '  Diff against the current tap file:\n'
     sed 's/^/    /' "${work_dir}/diff.txt"
-    products_changed=$((products_changed + 1))
-    changed_products+=("${product_name} ${version}")
+    pending_change="yes"
   fi
 
   if [[ "${product_target#Casks/}" == "${product_target}" ]]
@@ -599,6 +606,15 @@ sync_product() {
   then
     printf '  Result: FAILED, the lint reported offenses.\n'
     return 1
+  fi
+
+  # The product passed every check and the render changed the file, so the
+  # file is written into the tap by the apply step.
+  if [[ -n "${pending_change}" ]]
+  then
+    products_changed=$((products_changed + 1))
+    changed_products+=("${product_name} ${version}")
+    write_targets+=("${product_target}")
   fi
 
   printf '  Result: ok\n'
@@ -647,6 +663,7 @@ do
         if ! sync_product
         then
           products_failed=$((products_failed + 1))
+          skipped_products+=("${product_name}")
         fi
       fi
       reset_product
@@ -662,21 +679,43 @@ printf '  Products failed:        %s\n' "${products_failed}"
 printf '  Digest cross-checks:    %s matched\n' "${cross_checks_matched}"
 printf '  Rendered files changed: %s\n' "${products_changed}"
 
-if [[ "${products_failed}" -ne 0 ]]
+if [[ "${#skipped_products[@]}" -gt 0 ]]
 then
-  printf '\nAt least one product failed, so nothing was written.\n'
-  exit 1
+  printf '\nSkipped products:\n'
+  for skipped in "${skipped_products[@]}"
+  do
+    printf '  %s\n' "${skipped}"
+  done
+  printf 'A skipped product keeps the version it has in the tap.\n'
+fi
+
+# A product that failed is skipped. Its file is never written and the other
+# products still sync. The run ends with a non-zero exit code, so that the
+# daily job turns red.
+if [[ "${mode}" == "dry-run" ]]
+then
+  if [[ "${products_failed}" -ne 0 ]]
+  then
+    printf '\nThe dry run ends with a failure because a product was skipped.\n'
+    exit 1
+  fi
+  if [[ "${products_changed}" -eq 0 ]]
+  then
+    printf '\nNo changes: every rendered file is already in the tap.\n'
+    exit 0
+  fi
+  printf '\nDry run finished. Nothing was written to the tap.\n'
+  exit 0
 fi
 
 if [[ "${products_changed}" -eq 0 ]]
 then
+  if [[ "${products_failed}" -ne 0 ]]
+  then
+    printf '\nNo file changed, so nothing was written or committed.\n'
+    exit 1
+  fi
   printf '\nNo changes: every rendered file is already in the tap.\n'
-  exit 0
-fi
-
-if [[ "${mode}" == "dry-run" ]]
-then
-  printf '\nDry run finished. Nothing was written to the tap.\n'
   exit 0
 fi
 
@@ -691,7 +730,9 @@ do
   fi
 done <"${products_input}"
 
-for target in "${apply_targets[@]}"
+# Only the products that succeeded and that the render changed are written.
+# A skipped product has no trustworthy rendered file in the mirror.
+for target in "${write_targets[@]}"
 do
   cp "${mirror}/${target}" "${repo_root}/${target}"
 done
@@ -758,7 +799,7 @@ then
   exit 1
 fi
 
-git -C "${repo_root}" add -- "${apply_targets[@]}"
+git -C "${repo_root}" add -- "${write_targets[@]}"
 
 {
   printf 'chore(tap): sync casks to the latest upstream releases\n'
@@ -767,6 +808,15 @@ git -C "${repo_root}" add -- "${apply_targets[@]}"
   do
     printf '%s: updated to %s\n' "${product%% *}" "${product##* }"
   done
+  if [[ "${#skipped_products[@]}" -gt 0 ]]
+  then
+    printf '\n'
+    printf 'Skipped and left out of this commit:\n'
+    for skipped in "${skipped_products[@]}"
+    do
+      printf -- '- %s\n' "${skipped}"
+    done
+  fi
 } >"${work_dir}/commit-message.txt"
 
 # A fresh machine has no git identity, and the commit would fail without one.
@@ -788,4 +838,12 @@ then
 fi
 git -C "${repo_root}" push origin HEAD:main
 
+if [[ "${products_failed}" -ne 0 ]]
+then
+  printf '\nThe products that synced were written, committed and pushed to origin main.\n'
+  printf 'The skipped products were left out of this commit.\n'
+  exit 1
+fi
+
 printf '\nThe tap is up to date and the commit was pushed to origin main.\n'
+exit 0

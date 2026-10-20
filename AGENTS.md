@@ -6,7 +6,7 @@ This repository is the one Homebrew tap for every wiggly-sheets product. It is t
 
 Every cask and every formula in the tap is generated output. The source of truth is the template of the product, `automation/templates/<product>.rb`, together with the entry of the product in `automation/products.json`. The generator that turns the two into a tap file is `automation/sync-tap.sh`.
 
-Never hand edit a file under `Casks/` and never hand edit the formula at the root. Edit the template and let the generator write the tap file. A hand edit does not survive a run of the generator: the generator compares the body of the tap file with the body of the template, and when the two differ it stops and writes nothing. The run fails on purpose, so that a hand edit is never overwritten silently.
+Never hand edit a file under `Casks/` and never hand edit the formula at the root. Edit the template and let the generator write the tap file. A hand edit does not survive a run of the generator: the generator compares the body of the tap file with the body of the template, and when the two differ it skips that product and leaves its file alone. The other products still sync and the daily job turns red. The skipped product keeps the version it has in the tap until someone fixes the hand edit. The run fails on purpose, so that a hand edit is never overwritten silently.
 
 This guide explains the rules and the steps. `automation/README.md` explains the mechanics of the tool.
 
@@ -27,7 +27,7 @@ For the job to publish a release, that release must hold two things.
    522894d5b8c0b7bfddc584b7e03a114f9e7bb74876c6c0cb7f4943aa8289f850  Fluor.dmg
    ```
 
-A prerelease is ignored, because the job reads the latest release that GitHub reports as the latest one. If the digest that GitHub reports and the checksum file disagree, the run fails and writes nothing. If a release changes the name of its asset, change the pattern in `automation/products.json` first, or the job reports that the release does not hold the file.
+A prerelease is ignored, because the job reads the latest release that GitHub reports as the latest one. If the digest that GitHub reports and the checksum file disagree, that product is skipped and its file is not written, while the other products still sync and the job turns red. If a release changes the name of its asset, change the pattern in `automation/products.json` first, or the job reports that the release does not hold the file.
 
 To start the job by hand, open the Actions tab of the repository, choose the workflow "sync tap with upstream releases" and use the "Run workflow" button.
 
@@ -55,7 +55,7 @@ Keep to these rules in the template of a new product.
 
 ## Check your work before you commit
 
-Run the generator in dry run mode. `automation/sync-tap.sh --dry-run` resolves every product, cross-checks the digests, renders the templates and lints the result in a temporary copy of the tap, and it writes nothing. Add `--product <product>` to look at a single product. Do not run `--apply` by hand: that mode writes the files, commits them and pushes to `main`, and the daily job owns that.
+Run the generator in dry run mode. `automation/sync-tap.sh --dry-run` resolves every product, cross-checks the digests, renders the templates and lints the result in a temporary copy of the tap, and it writes nothing. It ends with a non-zero exit code when a product fails, because a failed product is skipped and the failure has to stay visible. Add `--product <product>` to look at a single product. Do not run `--apply` by hand: that mode writes the files, commits them and pushes to `main`, and the daily job owns that.
 
 Run the lint the way the CI runs it. A lint outside the Library directory of Homebrew reports findings that the CI does not report, so put the committed files into a scratch tap first:
 
