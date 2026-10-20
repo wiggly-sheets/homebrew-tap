@@ -49,7 +49,11 @@ jobs:
 
       - run: brew test-bot --only-setup
 
+      # The tap syntax check does not depend on the machine it runs on, and the
+      # container carries the linters that the macOS runners have to build from
+      # source, so the check runs there.
       - run: brew test-bot --only-tap-syntax
+        if: matrix.os == 'ubuntu-latest'
       - run: brew test-bot --only-formulae
         if: github.event_name == 'pull_request'
 
