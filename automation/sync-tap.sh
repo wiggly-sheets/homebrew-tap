@@ -584,13 +584,17 @@ sync_product() {
         printf '  Diff against the current tap file:\n'
         sed 's/^/    /' "${work_dir}/diff.txt"
         printf '  Result: FAILED, the tap file and the template differ in more than the marker, so nothing was written.\n'
+        printf '  A change of the template reaches the tap when the tap file is deleted and the next run writes it again.\n'
         return 1
       fi
     fi
   else
+    # A tap file that is not there is not a hand edit. It means that the
+    # product has to be written, so the file is created from the template.
     diff -u --label "${product_target} (current tap file)" --label "${product_target} (rendered)" \
       /dev/null "${rendered}" >"${work_dir}/diff.txt" 2>&1 || true
     printf '  Rendered file: new, the tap has no %s yet\n' "${product_target}"
+    printf '  The tap file is missing, so it will be created.\n'
     printf '  Diff against the current tap file:\n'
     sed 's/^/    /' "${work_dir}/diff.txt"
     pending_change="yes"
@@ -800,6 +804,18 @@ then
 fi
 
 git -C "${repo_root}" add -- "${write_targets[@]}"
+
+# A file that was deleted and written again with the same text leaves nothing
+# to commit, and the tap already holds the file that the template asks for.
+if git -C "${repo_root}" diff --cached --quiet
+then
+  printf '\nNo changes: the written files are already in the tap, so there was nothing to commit.\n'
+  if [[ "${products_failed}" -ne 0 ]]
+  then
+    exit 1
+  fi
+  exit 0
+fi
 
 {
   printf 'chore(tap): sync casks to the latest upstream releases\n'

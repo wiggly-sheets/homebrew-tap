@@ -3,7 +3,8 @@
 This directory makes the tap the single source of truth for every cask and formula
 in it. The files under `Casks/` and the formula at the repository root are
 generated output. Nobody edits them by hand: when a product changes, you edit its
-template, and the generator writes the new tap file.
+template, you delete the generated file, and the generator writes the new tap
+file.
 
 There are three moving parts.
 
@@ -46,8 +47,8 @@ is how you test a single product. It combines with either `--dry-run` or
 
 Only two values are ever machine-written: the version and the sha256. All the
 product copy stays in the template and is curated by hand. If you want to change
-the wording of a cask description, you change the template and the next run
-carries that change into the tap.
+the wording of a cask description, you change the template, you delete the
+generated file from the tap, and the next run carries that change into the tap.
 
 The generator refuses to write a product when the release checksum sidecar
 disagrees with the digest GitHub reports. Homebrew's own CI does not validate
@@ -62,16 +63,26 @@ the marker reads:
 
     # The tap's fluor cask comes from automation/templates/fluor.rb. Edit the template to change it.
 
-To change a cask or a formula, edit its template and run the generator again.
-The next write puts the new text into the tap.
+To change a cask or a formula, edit its template, delete the generated file from
+the tap and let the next run of the generator write the new text into the tap.
+The version and the digest come from the upstream release, so nothing is lost
+when the file is deleted.
 
 The generator compares the body of the tap file with the body of the template,
 after it removes the marker line from both sides. When the bodies are equal and
 the tap file has no marker line yet, the next write adds the marker line to the
 tap file. When the bodies differ, the product is skipped and its file is left
-alone, so a hand edited tap file or a stale template is never overwritten
-silently. The other products still sync and the run ends with a non-zero exit
-code.
+alone with the content it has, so a hand edited tap file or a stale template is
+never overwritten silently. The other products still sync and the run ends with
+a non-zero exit code.
+
+A tap file that is not in the tap at all is not a hand edit. It means that the
+file has to be written, so the generator creates it from the template, counts the
+product as changed and puts it in the write set of the apply run. The report
+says that the tap file is missing and that it will be created. This is the way a
+change of a template reaches the tap: change the template, delete the generated
+file in the same commit and let the next run of the daily job write the file
+again.
 
 ## The templates and the lint
 

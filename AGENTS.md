@@ -6,13 +6,15 @@ This repository is the one Homebrew tap for every wiggly-sheets product. It is t
 
 Every cask and every formula in the tap is generated output. The source of truth is the template of the product, `automation/templates/<product>.rb`, together with the entry of the product in `automation/products.json`. The generator that turns the two into a tap file is `automation/sync-tap.sh`.
 
-Never hand edit a file under `Casks/` and never hand edit the formula at the root. Edit the template and let the generator write the tap file. A hand edit does not survive a run of the generator: the generator compares the body of the tap file with the body of the template, and when the two differ it skips that product and leaves its file alone. The other products still sync and the daily job turns red. The skipped product keeps the version it has in the tap until someone fixes the hand edit. The run fails on purpose, so that a hand edit is never overwritten silently.
+Never hand edit a file under `Casks/` and never hand edit the formula at the root. Edit the template and let the generator write the tap file. A hand edit does not survive a run of the generator: the generator compares the body of the tap file with the body of the template, and when the two differ in more than the marker line it skips that product and leaves its file alone. The other products still sync and the daily job turns red. The skipped product keeps the version it has in the tap until someone fixes the hand edit. The run fails on purpose, so that a hand edit is never overwritten silently.
+
+A generated file that is missing from the tap is not a hand edit. It means that the file has to be written, and the next run writes it from the template. That is the way a change of a template reaches the tap: change the template, delete the generated file in the same commit, and let the next run of the daily job write the file again. The version and the digest come from the upstream release, so nothing is lost when the file is deleted.
 
 This guide explains the rules and the steps. `automation/README.md` explains the mechanics of the tool.
 
 ## What the machine writes and what a human writes
 
-Only two values in a tap file are machine written: the version and the sha256 digest. Everything else about the product is curated by hand in the template. That is the description, the zap trash list, the macOS dependency, the app bundle name and the caveats. Change the template when you want to change any of them, and the next run of the generator carries the change into the tap.
+Only two values in a tap file are machine written: the version and the sha256 digest. Everything else about the product is curated by hand in the template. That is the description, the zap trash list, the macOS dependency, the app bundle name and the caveats. Change the template when you want to change any of them. To land that change in the tap, delete the generated file of the product in the same commit as the change of the template, and let the next run of the daily job write the file again from the template. A generated file that is still in the tap and differs from the template in more than the marker line is skipped, so the run ends with a non-zero exit code and the file keeps the content it has. A hand edit of a generated file is never overwritten silently.
 
 ## A new release of an existing product
 
@@ -55,7 +57,9 @@ Keep to these rules in the template of a new product.
 
 ## Check your work before you commit
 
-Run the generator in dry run mode. `automation/sync-tap.sh --dry-run` resolves every product, cross-checks the digests, renders the templates and lints the result in a temporary copy of the tap, and it writes nothing. It ends with a non-zero exit code when a product fails, because a failed product is skipped and the failure has to stay visible. Add `--product <product>` to look at a single product. Do not run `--apply` by hand: that mode writes the files, commits them and pushes to `main`, and the daily job owns that.
+Run the generator in dry run mode. `automation/sync-tap.sh --dry-run` resolves every product, cross-checks the digests, renders the templates and lints the result in a temporary copy of the tap, and it writes nothing. It ends with a non-zero exit code when a product fails, because a failed product is skipped and the failure has to stay visible. The report names the skipped product and the reason. A product whose tap file is missing is not a failure: the report says that the tap file is missing and that it will be created, and the product counts as changed. A product whose tap file is in the tap and differs from the template in more than the marker line is skipped, the run ends with a non-zero exit code, and the file keeps the content it has. Add `--product <product>` to look at a single product. Do not run `--apply` by hand: that mode writes the files, commits them and pushes to `main`, and the daily job owns that.
+
+A change of a template only reaches the tap when the generated file is deleted, so delete the file of that product in the same commit as the change of the template, and read the report of the next run to see that the file will be created.
 
 Run the lint the way the CI runs it. A lint outside the Library directory of Homebrew reports findings that the CI does not report, so put the committed files into a scratch tap first:
 
