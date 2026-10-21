@@ -20,6 +20,8 @@ Only two values in a tap file are machine written: the version and the sha256 di
 
 Nothing has to be done by hand. The daily job in `.github/workflows/sync-tap.yml` runs at 11:00 UTC. It reads the latest stable release of each upstream repository, checks the digest that GitHub reports against the checksum file that the release publishes, renders the template, lints the result and pushes the new tap file to `main`.
 
+The upstream product repositories follow the release contract in [docs/release-contract.md](docs/release-contract.md). Every one of them implements that contract in its own Makefile, and no file of it is fetched over the network.
+
 For the job to publish a release, that release must hold two things.
 
 1. An asset whose name matches the pattern of the product in `automation/products.json`. A pattern may hold `{version}`, which the generator replaces with the release tag without its leading `v`. A product with two assets has one pattern per asset.

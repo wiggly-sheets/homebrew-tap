@@ -18,7 +18,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 
 Every cask and the formula in this tap are generated output. The tap renders them from the templates in `automation/templates/` and follows the latest stable release of each upstream repository, so a new release reaches the tap without a manual step.
 
-The rules for the tap live in [AGENTS.md](AGENTS.md). The mechanics of the generator live in [automation/README.md](automation/README.md).
+The rules for the tap live in [AGENTS.md](AGENTS.md). The mechanics of the generator live in [automation/README.md](automation/README.md). The contract that the upstream product repositories follow lives in [docs/release-contract.md](docs/release-contract.md).
 
 ## Install
 
