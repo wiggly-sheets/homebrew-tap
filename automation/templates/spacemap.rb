@@ -21,4 +21,12 @@ cask "spacemap" do
     "~/.config/spacemap",
     "~/Library/Preferences/com.spacemap.plist",
   ]
+
+  caveats <<~EOS
+    Spacemap is ad-hoc signed and not notarized. macOS may block the first launch. If that happens, open it through System Settings > Privacy & Security, right-click the app and choose Open, or remove the quarantine attribute manually:
+
+      xattr -dr com.apple.quarantine /Applications/Spacemap.app
+
+    Only run the quarantine command for apps you downloaded from a source you trust.
+  EOS
 end

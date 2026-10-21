@@ -18,4 +18,12 @@ cask "swiftdefaults" do
     "~/Library/Application Support/SwiftDefaults",
     "~/Library/Preferences/com.wigglysheets.SwiftDefaults.plist",
   ]
+
+  caveats <<~EOS
+    SwiftDefaults is not notarized. macOS may block the first launch. If that happens, open it through System Settings > Privacy & Security, right-click the app and choose Open, or remove the quarantine attribute manually:
+
+      xattr -dr com.apple.quarantine /Applications/SwiftDefaults.app
+
+    Only run the quarantine command for apps you downloaded from a source you trust.
+  EOS
 end

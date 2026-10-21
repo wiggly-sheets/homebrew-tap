@@ -32,4 +32,12 @@ cask "spacesrenamer" do
     "~/Library/Application Support/SpacesRenamer",
     "~/Library/Containers/com.alexbeals.spacesrenamer",
   ]
+
+  caveats <<~EOS
+    Spaces Renamer is ad-hoc signed and not notarized. macOS may block the first launch. If that happens, open it through System Settings > Privacy & Security, right-click the app and choose Open, or remove the quarantine attribute manually:
+
+      xattr -dr com.apple.quarantine /Applications/SpacesRenamer.app
+
+    Only run the quarantine command for apps you downloaded from a source you trust.
+  EOS
 end
