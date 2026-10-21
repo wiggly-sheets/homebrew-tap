@@ -10,7 +10,7 @@ cask "fluor" do
   desc "Make your function keys fit the app you're using"
   homepage "https://github.com/wiggly-sheets/fluor"
 
-  depends_on macos: :sequoia
+  depends_on macos: :tahoe
 
   app "Fluor.app"
 
