@@ -14,6 +14,12 @@ brew install --cask wallpaper-selector
 
 A native macOS menu-bar wallpaper picker and rotator.
 
+## Requirements
+
+- macOS 13 or later
+- macOS 14 or later for the All Spaces feature
+- Apple Silicon (arm64) only
+
 ## How the tap stays current
 
 The tap renders this cask from its own template, `automation/templates/wallpaper-selector.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.

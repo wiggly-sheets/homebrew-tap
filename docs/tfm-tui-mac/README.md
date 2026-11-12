@@ -26,7 +26,7 @@ tfm is a mouse-first terminal file manager built with OpenTUI. It runs inside yo
 
 ## Requirements
 
-- macOS 12 or later (Monterey+)
+- macOS 13 or later (Ventura+)
 - Linux with glibc (x64 or arm64)
 - Bun 1.4.0+ for development
 
