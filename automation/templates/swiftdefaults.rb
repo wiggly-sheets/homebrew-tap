@@ -10,6 +10,7 @@ cask "swiftdefaults" do
   desc "GUI for managing defaults"
   homepage "https://github.com/wiggly-sheets/swiftdefaults"
 
+  depends_on arch: :arm64
   depends_on macos: :sequoia
 
   app "SwiftDefaults.app"
