@@ -22,6 +22,8 @@ Nothing has to be done by hand. The daily job in `.github/workflows/sync-tap.yml
 
 The upstream product repositories follow the release contract in [docs/release-contract.md](docs/release-contract.md). Every one of them implements that contract in its own Makefile, and no file of it is fetched over the network.
 
+The contract also covers the development loop and the changelog. `make run` builds, installs into `~/Applications` and launches in every product; `make verify` checks the artifact that CI will ship; `make test` checks the changelog shape before the suite. Every product keeps a Keep a Changelog file with `[Unreleased]` and dated version sections, and `make release VERSION=x.y.z` moves `[Unreleased]` to the version, tests, builds, verifies, commits the bump and creates the tag. A release starts only with a pushed tag; no workflow creates one.
+
 For the job to publish a release, that release must hold two things.
 
 1. An asset whose name matches the pattern of the product in `automation/products.json`. A pattern may hold `{version}`, which the generator replaces with the release tag without its leading `v`. A product with two assets has one pattern per asset.

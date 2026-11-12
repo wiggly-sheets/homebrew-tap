@@ -4,15 +4,15 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 
 ## Casks and Formulas
 
-| Name | Type | Description |
-|------|------|-------------|
-| `wallpaper-selector` | cask | Native menu-bar wallpaper picker and rotator |
-| `spacesrenamer` | cask | Give Spaces persistent names in Mission Control |
-| `sketchybar-studio` | cask | Preview and edit SketchyBar configs in real time |
-| `spacemap` | cask | Visualize spaces as an interactive map |
-| `fluor` | cask | Make your function keys fit the app you're using |
-| `swiftdefaults` | cask | GUI for managing defaults |
-| `tfm` | formula | Mouse-first terminal file manager |
+| Name | Type | Latest | Description |
+|------|------|--------|-------------|
+| `wallpaper-selector` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/wallpaper-selector?sort=semver&label=release)](https://github.com/wiggly-sheets/wallpaper-selector/releases) | Native menu-bar wallpaper picker and rotator |
+| `spacesrenamer` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/spaces-renamer?sort=semver&label=release)](https://github.com/wiggly-sheets/spaces-renamer/releases) | Give Spaces persistent names in Mission Control |
+| `sketchybar-studio` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/SketchyBar-Studio?sort=semver&label=release)](https://github.com/wiggly-sheets/SketchyBar-Studio/releases) | Preview and edit SketchyBar configs in real time |
+| `spacemap` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/Spacemap?sort=semver&label=release)](https://github.com/wiggly-sheets/Spacemap/releases) | Visualize spaces as an interactive map |
+| `fluor` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/fluor?sort=semver&label=release)](https://github.com/wiggly-sheets/fluor/releases) | Make your function keys fit the app you're using |
+| `swiftdefaults` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/swiftdefaults?sort=semver&label=release)](https://github.com/wiggly-sheets/swiftdefaults/releases) | GUI for managing defaults |
+| `tfm` | formula | [![release](https://img.shields.io/github/v/release/wiggly-sheets/tfm-tui-mac?sort=semver&label=release)](https://github.com/wiggly-sheets/tfm-tui-mac/releases) | Mouse-first terminal file manager |
 
 ## Where the tap files come from
 
