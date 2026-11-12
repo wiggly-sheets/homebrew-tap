@@ -19,7 +19,7 @@ cask "spacemap" do
 
   zap trash: [
     "~/.config/spacemap",
-    "~/Library/Preferences/com.spacemap.plist",
+    "~/Library/Preferences/com.zm.spacemap.plist",
   ]
 
   caveats <<~EOS
