@@ -7,7 +7,7 @@
 #   brew tap wiggly-sheets/homebrew-tap
 #   brew install --cask spacesrenamer
 #
-# Or directly from the raw cask URL:
+# Or without tapping first:
 #   brew install --cask wiggly-sheets/homebrew-tap/spacesrenamer
 #
 # This cask installs the .app bundle to /Applications.
@@ -40,6 +40,8 @@ cask "spacesrenamer" do
 
     Only run the quarantine command for apps you downloaded from a source you trust.
 
-    Names inside Mission Control require Apple Silicon, reduced macOS security, and the `arm64e_preview_abi` boot argument. Deactivate injection before uninstalling, because `brew uninstall` does not remove the privileged injection runtime.
+    Names inside Mission Control need Apple Silicon, reduced macOS security, and the -arm64e_preview_abi boot argument. See https://github.com/wiggly-sheets/spaces-renamer#security-and-compatibility for the security and compatibility steps.
+
+    Deactivate injection before uninstalling. If you used the MIP backend, brew uninstall does not remove its privileged runtime or LaunchDaemons.
   EOS
 end
