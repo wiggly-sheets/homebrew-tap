@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 # The tap's spacesrenamer cask comes from automation/templates/spacesrenamer.rb. Edit the template to change it.
-# Homebrew formula for Spaces Renamer
+# Homebrew cask for Spaces Renamer
 #
 # Install from the consolidated tap:
 #   brew tap wiggly-sheets/homebrew-tap
 #   brew install --cask spacesrenamer
 #
 # Or directly from the raw cask URL:
-#   brew install --cask wiggly-sheets/homebrew-tap/spacesrenamer.rb
+#   brew install --cask wiggly-sheets/homebrew-tap/spacesrenamer
 #
-# This formula installs the .app bundle to /Applications.
+# This cask installs the .app bundle to /Applications.
 # The Dock injection bundle is bundled inside the app.
 
 cask "spacesrenamer" do
@@ -30,7 +30,7 @@ cask "spacesrenamer" do
   zap trash: [
     "~/.config/spacesrenamer",
     "~/Library/Application Support/SpacesRenamer",
-    "~/Library/Containers/com.alexbeals.spacesrenamer",
+    "~/Library/Preferences/com.wiggly-sheets.SpacesRenamer.plist",
   ]
 
   caveats <<~EOS
@@ -39,5 +39,7 @@ cask "spacesrenamer" do
       xattr -dr com.apple.quarantine /Applications/SpacesRenamer.app
 
     Only run the quarantine command for apps you downloaded from a source you trust.
+
+    Names inside Mission Control require Apple Silicon, reduced macOS security, and the `arm64e_preview_abi` boot argument. Deactivate injection before uninstalling, because `brew uninstall` does not remove the privileged injection runtime.
   EOS
 end

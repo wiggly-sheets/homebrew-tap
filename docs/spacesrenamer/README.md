@@ -14,6 +14,13 @@ brew install --cask spacesrenamer
 
 Give macOS Spaces persistent names in Mission Control.
 
+## Requirements
+
+- macOS 14 or later
+- Apple Silicon only
+- Names inside Mission Control need the `-arm64e_preview_abi` boot argument and reduced macOS security protections, as described in the [upstream README](https://github.com/wiggly-sheets/spaces-renamer#security-and-compatibility)
+- Activating injection asks for administrator authorization
+
 ## How the tap stays current
 
 The tap renders this cask from its own template, `automation/templates/spacesrenamer.rb`, and follows the latest stable release of the upstream repository. A new upstream release reaches the tap without any manual step.
@@ -30,9 +37,19 @@ brew upgrade --cask spacesrenamer
 
 ## Uninstalling
 
+Deactivate injection in the app first: choose **Deactivate** in the menu-bar popover or in **Settings → Injection**. Turn off **Launch at login**, then quit the app.
+
 ```bash
 brew uninstall --cask spacesrenamer
 brew untap wiggly-sheets/homebrew-tap
+```
+
+`brew uninstall` does not remove the privileged MIP runtime or the LaunchDaemons it registers. If a Space name still shows, the published Dock and WindowManager preference keys can be cleared manually:
+
+```bash
+defaults delete com.apple.dock SpacesRenamerNames
+defaults delete com.apple.dock SpacesRenamerMonitors
+defaults delete com.apple.WindowManager SpacesRenamerPlugin   # or com.apple.dock on macOS 26 and earlier
 ```
 
 ## Project
