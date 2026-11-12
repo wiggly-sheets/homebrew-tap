@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: sync-tap
+  cancel-in-progress: false
+
 jobs:
   sync-tap:
     runs-on: macos-15
