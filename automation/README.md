@@ -68,13 +68,16 @@ the tap and let the next run of the generator write the new text into the tap.
 The version and the digest come from the upstream release, so nothing is lost
 when the file is deleted.
 
-The generator compares the body of the tap file with the body of the template,
-after it removes the marker line from both sides. When the bodies are equal and
-the tap file has no marker line yet, the next write adds the marker line to the
-tap file. When the bodies differ, the product is skipped and its file is left
-alone with the content it has, so a hand edited tap file or a stale template is
-never overwritten silently. The other products still sync and the run ends with
-a non-zero exit code.
+The generator compares the body of the tap file with the new render, after it
+removes the marker line from both sides. When the bodies are equal and the tap
+file has no marker line yet, the next write adds the marker line to the tap
+file. When the bodies differ, the generator renders the template again with the
+version and the digests that the tap file already holds. A match means the tap
+file is the generated output of the previous release, so the new version and
+digest update it. When neither body matches, the product is skipped and its
+file is left alone with the content it has, so a hand edited tap file or a stale
+template is never overwritten silently. The other products still sync and the
+run ends with a non-zero exit code.
 
 A tap file that is not in the tap at all is not a hand edit. It means that the
 file has to be written, so the generator creates it from the template, counts the

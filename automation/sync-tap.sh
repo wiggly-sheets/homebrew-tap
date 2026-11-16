@@ -581,12 +581,49 @@ sync_product() {
         sed 's/^/    /' "${work_dir}/diff.txt"
         pending_change="yes"
       else
-        printf '  Rendered file: differs from the tap in more than the marker\n'
-        printf '  Diff against the current tap file:\n'
-        sed 's/^/    /' "${work_dir}/diff.txt"
-        printf '  Result: FAILED, the tap file and the template differ in more than the marker, so nothing was written.\n'
-        printf '  A change of the template reaches the tap when the tap file is deleted and the next run writes it again.\n'
-        return 1
+        # A generated file from an older release differs from the new render
+        # only in the version and the digests. Re-render the template with the
+        # values already in the tap. If that matches, the tap was not edited by
+        # hand and the new render can replace it.
+        tap_version="$(sed -n 's/^[[:space:]]*version[[:space:]]*"\([^"]*\)".*/\1/p' \
+          "${repo_root}/${product_target}" | head -n 1)"
+        tap_digests=()
+        while IFS= read -r tap_digest
+        do
+          tap_digests+=("${tap_digest}")
+        done < <(grep -Eo '[0-9a-fA-F]{32,}' "${repo_root}/${product_target}" || true)
+
+        old_render_ok="no"
+        if [[ -n "${tap_version}" ]] && [[ "${#tap_digests[@]}" -eq "${#asset_placeholders[@]}" ]]
+        then
+          old_substitutions=("${product_version_placeholder}" "${tap_version}")
+          for index in "${!asset_placeholders[@]}"
+          do
+            old_substitutions+=("${asset_placeholders[${index}]}" "${tap_digests[${index}]}")
+          done
+          old_rendered="${work_dir}/old-rendered"
+          render_template "${product_template}" "${old_rendered}" "${old_substitutions[@]}"
+          strip_marker "${old_rendered}" >"${work_dir}/old-rendered-body.txt"
+          if diff -u "${work_dir}/tap-body.txt" "${work_dir}/old-rendered-body.txt" >/dev/null 2>&1
+          then
+            old_render_ok="yes"
+          fi
+        fi
+
+        if [[ "${old_render_ok}" == "yes" ]]
+        then
+          printf '  Rendered file: generated for version %s, the new release updates it\n' "${tap_version}"
+          printf '  Diff against the current tap file:\n'
+          sed 's/^/    /' "${work_dir}/diff.txt"
+          pending_change="yes"
+        else
+          printf '  Rendered file: differs from the tap in more than the marker\n'
+          printf '  Diff against the current tap file:\n'
+          sed 's/^/    /' "${work_dir}/diff.txt"
+          printf '  Result: FAILED, the tap file and the template differ in more than the marker, so nothing was written.\n'
+          printf '  A change of the template reaches the tap when the tap file is deleted and the next run writes it again.\n'
+          return 1
+        fi
       fi
     fi
   else
