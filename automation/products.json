@@ -101,6 +101,20 @@
         }
       ],
       "sidecar": "tfm-universal-macos.gz.sha256"
+    },
+    {
+      "name": "menutitle",
+      "repo": "wiggly-sheets/menutitle",
+      "template": "automation/templates/menutitle.rb",
+      "target": "Casks/menutitle.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "MenuTitle-{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "MenuTitle-{version}.dmg.sha256"
     }
   ]
 }

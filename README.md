@@ -13,6 +13,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 | `fluor` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/fluor?sort=semver&label=release)](https://github.com/wiggly-sheets/fluor/releases) | Make your function keys fit the app you're using |
 | `swiftdefaults` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/swiftdefaults?sort=semver&label=release)](https://github.com/wiggly-sheets/swiftdefaults/releases) | GUI for managing defaults |
 | `tfm` | formula | [![release](https://img.shields.io/github/v/release/wiggly-sheets/tfm-tui-mac?sort=semver&label=release)](https://github.com/wiggly-sheets/tfm-tui-mac/releases) | Mouse-first terminal file manager |
+| `menutitle` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/menutitle?sort=semver&label=release)](https://github.com/wiggly-sheets/menutitle/releases) | Show the focused window title in the menu bar |
 
 ## Where the tap files come from
 
@@ -38,6 +39,7 @@ brew install --cask sketchybar-studio
 brew install --cask spacemap
 brew install --cask fluor
 brew install --cask swiftdefaults
+brew install --cask menutitle
 brew install tfm
 ```
 
@@ -50,6 +52,7 @@ brew install tfm
 - [fluor](docs/fluor/README.md)
 - [swiftdefaults](docs/swiftdefaults/README.md)
 - [tfm-tui-mac](docs/tfm-tui-mac/README.md)
+- [menutitle](docs/menutitle/README.md)
 
 ## Project Repositories
 
@@ -60,3 +63,4 @@ brew install tfm
 - [Fluor](https://github.com/wiggly-sheets/fluor)
 - [SwiftDefaults](https://github.com/wiggly-sheets/swiftdefaults)
 - [tfm-tui-mac](https://github.com/wiggly-sheets/tfm-tui-mac)
+- [menutitle](https://github.com/wiggly-sheets/menutitle)
