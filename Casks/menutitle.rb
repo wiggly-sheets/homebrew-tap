@@ -1,7 +1,7 @@
 # Generated from automation/templates/menutitle.rb. Edit the template, not this file.
 cask "menutitle" do
-  version "1.1.0"
-  sha256 "feffd081f1c97e54f05bd5698cc1b46981af1820a8503ab94b859a8f64725e7d"
+  version "1.1.1"
+  sha256 "596742017937a289ddbb0263a6648d6c835677b0c8fc9e4fe084eb5286d45b3f"
 
   url "https://github.com/wiggly-sheets/menutitle/releases/download/v#{version}/MenuTitle-#{version}.dmg"
   name "MenuTitle"
