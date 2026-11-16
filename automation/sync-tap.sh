@@ -265,18 +265,19 @@ strip_template_preamble() {
 # Every generated tap file starts with a marker line that names the template it
 # comes from. The marker is the first line of the file when it starts with the
 # marker prefix.
-marker_prefix="# The tap's "
+marker_prefix="# Generated from "
 
 # Tap files that were written before the marker changed still carry the old
 # wording. The generator reads them, so it recognises both wordings.
-legacy_marker_prefix="# This is the tap's "
+legacy_marker_prefix="# The tap's "
+older_marker_prefix="# This is the tap's "
 
 # has_marker_line reports whether the file starts with a marker line.
 has_marker_line() {
   local first_line=""
   read -r first_line <"$1" || true
   case "${first_line}" in
-    "${marker_prefix}"* | "${legacy_marker_prefix}"*) return 0 ;;
+    "${marker_prefix}"* | "${legacy_marker_prefix}"* | "${older_marker_prefix}"*) return 0 ;;
     *) ;;
   esac
   return 1

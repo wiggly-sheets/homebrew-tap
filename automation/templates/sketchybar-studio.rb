@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# The tap's sketchybar-studio cask comes from automation/templates/sketchybar-studio.rb. Edit the template to change it.
+# Generated from automation/templates/sketchybar-studio.rb. Edit the template, not this file.
 cask "sketchybar-studio" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

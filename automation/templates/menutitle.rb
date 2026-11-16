@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# The tap's menutitle cask comes from automation/templates/menutitle.rb. Edit the template to change it.
+# Generated from automation/templates/menutitle.rb. Edit the template, not this file.
 cask "menutitle" do
   version "VERSION_PLACEHOLDER"
   sha256 "SHA256_PLACEHOLDER"

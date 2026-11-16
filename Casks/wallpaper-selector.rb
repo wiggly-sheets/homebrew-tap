@@ -1,4 +1,4 @@
-# The tap's wallpaper-selector cask comes from automation/templates/wallpaper-selector.rb. Edit the template to change it.
+# Generated from automation/templates/wallpaper-selector.rb. Edit the template, not this file.
 cask "wallpaper-selector" do
   version "1.0.0"
   sha256 "b65449be8b147200525ea53a2342be062012c27d8115bf0c34c0c7b0e309d7da"

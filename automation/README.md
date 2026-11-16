@@ -61,7 +61,7 @@ comes from. The marker tells a reader that the file is generated output and
 points them at the template, which is the file to edit. For the cask of fluor
 the marker reads:
 
-    # The tap's fluor cask comes from automation/templates/fluor.rb. Edit the template to change it.
+    # Generated from automation/templates/fluor.rb. Edit the template, not this file.
 
 To change a cask or a formula, edit its template, delete the generated file from
 the tap and let the next run of the generator write the new text into the tap.
@@ -108,6 +108,7 @@ A template also holds the RuboCop directives that the template itself needs.
 The formula of tfm carries this directive:
 
     # rubocop:disable FormulaAudit/Checksum, FormulaAudit/ChecksumCase, Lint/DuplicateMethods
+    # rubocop:enable FormulaAudit/Checksum, FormulaAudit/ChecksumCase, Lint/DuplicateMethods
 
 The digest of a template is a placeholder and not a real sha256, so the
 `FormulaAudit` cops would report it. The formula of the template and the

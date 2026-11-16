@@ -1,7 +1,7 @@
-# The tap's menutitle cask comes from automation/templates/menutitle.rb. Edit the template to change it.
+# Generated from automation/templates/menutitle.rb. Edit the template, not this file.
 cask "menutitle" do
-  version "1.0.0"
-  sha256 "084868a0e377cd9b01179a7dab733899702634ea45e95bdbe7919c1aae909555"
+  version "1.1.0"
+  sha256 "feffd081f1c97e54f05bd5698cc1b46981af1820a8503ab94b859a8f64725e7d"
 
   url "https://github.com/wiggly-sheets/menutitle/releases/download/v#{version}/MenuTitle-#{version}.dmg"
   name "MenuTitle"

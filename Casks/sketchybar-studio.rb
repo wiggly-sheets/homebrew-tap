@@ -1,4 +1,4 @@
-# The tap's sketchybar-studio cask comes from automation/templates/sketchybar-studio.rb. Edit the template to change it.
+# Generated from automation/templates/sketchybar-studio.rb. Edit the template, not this file.
 cask "sketchybar-studio" do
   version "1.0.1"
   sha256 "5ab3c436afb5fe7f3e55ebf71daabf7024dc1ca0d0d19a9756d870f79f935781"

@@ -1,4 +1,4 @@
-# The tap's swiftdefaults cask comes from automation/templates/swiftdefaults.rb. Edit the template to change it.
+# Generated from automation/templates/swiftdefaults.rb. Edit the template, not this file.
 cask "swiftdefaults" do
   version "1.0.1"
   sha256 "8767d7b06040c464e64d0205b3ca6fdd34778f20cee97ec8c42ee36dd40884b0"
