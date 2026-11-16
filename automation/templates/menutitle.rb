@@ -15,9 +15,7 @@ cask "menutitle" do
 
   app "MenuTitle.app"
 
-  zap trash: [
-    "~/Library/Preferences/com.wigglysheets.menutitle.plist",
-  ]
+  zap trash: "~/Library/Preferences/com.wigglysheets.menutitle.plist"
 
   caveats <<~EOS
     MenuTitle uses Accessibility access to read window titles and measure the menu bar. Grant it in System Settings > Privacy & Security > Accessibility.
