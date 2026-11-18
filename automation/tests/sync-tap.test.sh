@@ -6,15 +6,16 @@
 #
 #   automation/tests/sync-tap.test.sh
 #
-# The fixture covers only behaviour that the committed and the working copy of
-# the generator share: a missing tap file is created, a checksum disagreement
-# is refused, a hand edit is refused, and a matching tap file is left alone.
+# The fixture covers a missing tap file being created, a checksum disagreement
+# being refused, a hand edit being refused, a version bump from an older
+# release being accepted, and a matching tap file being left alone.
 set -euo pipefail
 
 test_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 generator="${test_dir}/../sync-tap.sh"
 digest="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 mismatch="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdee"
+old_digest="fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
 status=0
 
 work_dir="$(mktemp -d)"
@@ -121,16 +122,19 @@ run_generator() {
 }
 
 # write_cask writes the tap file that the generator renders, with the given
-# description line. A description that differs from the template is a hand edit.
+# description line, version and digest. A description that differs from the
+# template is a hand edit.
 write_cask() {
   local repo="$1"
   local description="$2"
+  local version="$3"
+  local sha256="$4"
 
   cat >"${repo}/Casks/example.rb" <<CASKE
 # Generated from automation/templates/example.rb. Edit the template, not this file.
 cask "example" do
-  version "1.2.3"
-  sha256 "${digest}"
+  version "${version}"
+  sha256 "${sha256}"
 
   url "https://github.com/fixture/example/releases/download/v#{version}/Example-#{version}.dmg"
   name "Example"
@@ -170,7 +174,7 @@ expect_line "The dry run ends with a failure because a product was skipped." "${
 # own is left alone, and the run fails.
 repo="${work_dir}/hand-edit"
 fixture_repo "${repo}" "${digest}" "${digest}"
-write_cask "${repo}" "Hand edited description"
+write_cask "${repo}" "Hand edited description" "1.2.3" "${digest}"
 run_generator "${repo}"
 expect_status 1
 expect_line "differs from the tap in more than the marker" "${repo}/report.txt"
@@ -182,10 +186,25 @@ fi
 # A tap file that already holds the rendered text is reported as unchanged.
 repo="${work_dir}/current"
 fixture_repo "${repo}" "${digest}" "${digest}"
-write_cask "${repo}" "Example cask for the generator test"
+write_cask "${repo}" "Example cask for the generator test" "1.2.3" "${digest}"
 run_generator "${repo}"
 expect_status 0
 expect_line "Rendered file: identical to the tap file" "${repo}/report.txt"
 expect_line "No changes: every rendered file is already in the tap." "${repo}/report.txt"
+
+# A tap file from an older release differs from the new render only in the
+# version and the digest. The generator re-renders the template with the
+# values in the tap to prove it was not edited by hand, accepts the new
+# release and counts it as changed. The dry run still writes nothing.
+repo="${work_dir}/version-bump"
+fixture_repo "${repo}" "${digest}" "${digest}"
+write_cask "${repo}" "Example cask for the generator test" "1.2.2" "${old_digest}"
+run_generator "${repo}"
+expect_status 0
+expect_line "Rendered file: generated for version 1.2.2, the new release updates it" "${repo}/report.txt"
+expect_line "Rendered files changed: 1" "${repo}/report.txt"
+expect_line "Dry run finished. Nothing was written to the tap." "${repo}/report.txt"
+grep -qF 'version "1.2.2"' "${repo}/Casks/example.rb" || fail "the dry run changed the version in the tap"
+grep -qF "sha256 \"${old_digest}\"" "${repo}/Casks/example.rb" || fail "the dry run changed the digest in the tap"
 
 printf 'ok: the generator report matches the fixture expectations\n'
