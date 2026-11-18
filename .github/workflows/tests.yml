@@ -66,3 +66,13 @@ jobs:
         with:
           name: bottles_${{ matrix.os }}
           path: '*.bottle.*'
+
+  # The generator test is hermetic: gh, the checksum download and the Homebrew
+  # style check are stubbed, so it needs no Homebrew and runs on a plain runner
+  # instead of the test-bot matrix.
+  generator-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - run: automation/tests/sync-tap.test.sh
