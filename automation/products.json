@@ -115,6 +115,20 @@
         }
       ],
       "sidecar": "MenuTitle-{version}.dmg.sha256"
+    },
+    {
+      "name": "air-battery",
+      "repo": "wiggly-sheets/Air-Battery",
+      "template": "automation/templates/air-battery.rb",
+      "target": "Casks/air-battery.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "AirBattery-{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "AirBattery-{version}.dmg.sha256"
     }
   ]
 }

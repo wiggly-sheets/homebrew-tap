@@ -14,6 +14,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 | `swiftdefaults` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/swiftdefaults?sort=semver&label=release)](https://github.com/wiggly-sheets/swiftdefaults/releases) | GUI for managing defaults |
 | `tfm` | formula | [![release](https://img.shields.io/github/v/release/wiggly-sheets/tfm-tui-mac?sort=semver&label=release)](https://github.com/wiggly-sheets/tfm-tui-mac/releases) | Mouse-first terminal file manager |
 | `menutitle` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/menutitle?sort=semver&label=release)](https://github.com/wiggly-sheets/menutitle/releases) | Show the focused window title in the menu bar |
+| `air-battery` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/Air-Battery?sort=semver&label=release)](https://github.com/wiggly-sheets/Air-Battery/releases) | Show battery levels of all devices in the menu bar, Dock and widgets |
 
 ## Where the tap files come from
 
@@ -40,6 +41,7 @@ brew install --cask spacemap
 brew install --cask fluor
 brew install --cask swiftdefaults
 brew install --cask menutitle
+brew install --cask air-battery
 brew install tfm
 ```
 
@@ -53,6 +55,7 @@ brew install tfm
 - [swiftdefaults](docs/swiftdefaults/README.md)
 - [tfm-tui-mac](docs/tfm-tui-mac/README.md)
 - [menutitle](docs/menutitle/README.md)
+- [air-battery](docs/air-battery/README.md)
 
 ## Project Repositories
 
@@ -64,3 +67,4 @@ brew install tfm
 - [SwiftDefaults](https://github.com/wiggly-sheets/swiftdefaults)
 - [tfm-tui-mac](https://github.com/wiggly-sheets/tfm-tui-mac)
 - [menutitle](https://github.com/wiggly-sheets/menutitle)
+- [Air-Battery](https://github.com/wiggly-sheets/Air-Battery)
