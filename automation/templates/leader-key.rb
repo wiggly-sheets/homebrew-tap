@@ -10,7 +10,6 @@ cask "leader-key" do
   desc "Keyboard shortcut launcher with nested leader-key sequences"
   homepage "https://github.com/wiggly-sheets/LeaderKey"
 
-  depends_on arch: :arm64
   depends_on macos: :sonoma
 
   app "Leader Key.app"

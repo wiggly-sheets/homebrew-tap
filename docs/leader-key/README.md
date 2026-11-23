@@ -22,7 +22,7 @@ links, text snippet actions, cheatsheet search, fuzzy search, and Liquid Glass t
 ## Requirements
 
 - macOS 14.4 or later
-- Apple Silicon (arm64) only
+- Universal build for Apple Silicon and Intel
 - Accessibility access for text snippet actions
 
 ## Configuration
