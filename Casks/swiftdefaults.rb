@@ -1,7 +1,7 @@
 # Generated from automation/templates/swiftdefaults.rb. Edit the template, not this file.
 cask "swiftdefaults" do
-  version "1.0.1"
-  sha256 "8767d7b06040c464e64d0205b3ca6fdd34778f20cee97ec8c42ee36dd40884b0"
+  version "1.1.0"
+  sha256 "af1db3866fbfd903768a1aaa61288c269f3938e155a75072037d6dc526785218"
 
   url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}.dmg"
   name "SwiftDefaults"
