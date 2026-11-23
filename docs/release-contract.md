@@ -23,12 +23,12 @@ Every product repository offers the targets below. A call of `make` without a ta
 | `run` | Builds the launchable artifact, installs it and launches it. | All |
 | `install` | Builds and copies the artifact into `$(HOME)/Applications`; tfm installs its binary with `install.sh`. | All |
 | `app` | Builds the application bundle of the product. | Every product with a bundle |
-| `app-arm` | Builds the application bundle for arm64. | fluor, spacemap |
-| `app-intel` | Builds the application bundle for x86_64. | fluor, spacemap |
+| `app-arm` | Builds the application bundle for arm64. | fluor, spacemap, SwiftDefaults, Wallpaper Selector, MenuTitle, Leader Key, KBPulse |
+| `app-intel` | Builds the application bundle for x86_64. | fluor, spacemap, SwiftDefaults, Wallpaper Selector, MenuTitle, Leader Key, KBPulse |
 | `app-universal` | Builds the application bundle for arm64 and x86_64. | fluor, spacemap, SketchyBar Studio |
 | `dmg` | Builds the disk image of the product. | Every product with a bundle |
-| `dmg-arm` | Builds the disk image for arm64. | fluor, spacemap |
-| `dmg-intel` | Builds the disk image for x86_64. | fluor, spacemap |
+| `dmg-arm` | Builds the disk image for arm64. | fluor, spacemap, SwiftDefaults, Wallpaper Selector, MenuTitle, Leader Key, KBPulse |
+| `dmg-intel` | Builds the disk image for x86_64. | fluor, spacemap, SwiftDefaults, Wallpaper Selector, MenuTitle, Leader Key, KBPulse |
 | `dmg-universal` | Builds the disk image for arm64 and x86_64. | fluor, spacemap, SketchyBar Studio |
 | `release-artifacts` | Builds every file that the release publishes and verifies its checksum. | All |
 | `release-notes VERSION=x.y.z` | Prints the changelog section of a version. | All |
@@ -62,18 +62,21 @@ a malformed changelog fails the same gate as a failing test.
 
 ## Architectures
 
-A product offers a per-architecture target only when it can build that architecture. The universal target counts as a per-architecture target, because a universal binary holds two architectures. A product that ships one architecture only, such as an Apple silicon only product, offers no per-architecture target at all, and the plain `app` and `dmg` targets build that one artifact.
+Every product that can run on Intel ships both architectures as separate artifacts. The plain `app` and `dmg` targets cover every artifact the product publishes. A universal target may stay for local use, but the release does not ship it. Only a product that cannot run on Intel ships a single arm64 artifact, offers no per-architecture target, and marks its cask with `depends_on arch: :arm64`.
 
 | Product | Architectures it builds | Per-architecture targets | Note |
 |---|---|---|---|
-| fluor | arm64, x86_64, universal | `app-arm`, `app-intel`, `app-universal`, `dmg-arm`, `dmg-intel`, `dmg-universal` | `make app` builds the universal bundle, and the release ships that one |
+| fluor | arm64, x86_64, universal | `app-arm`, `app-intel`, `app-universal`, `dmg-arm`, `dmg-intel`, `dmg-universal` | The release ships a disk image per architecture; the universal targets stay for local use |
 | spacemap | arm64, x86_64, universal | `app-arm`, `app-intel`, `app-universal`, `dmg-arm`, `dmg-intel`, `dmg-universal` | The release ships a disk image per architecture |
-| SketchyBar Studio | universal | `app-universal`, `dmg-universal` | One universal package |
-| SwiftDefaults | arm64 | None | Apple silicon only |
-| Leader Key | universal | None | One universal package |
-| Wallpaper Selector | arm64 | None | Apple silicon only |
-| Spaces Renamer | arm64 | None | Apple silicon only |
-| tfm | universal | None | A command line tool without an application bundle |
+| SketchyBar Studio | arm64, x86_64, universal | `app-arm`, `app-intel`, `app-universal`, `dmg-arm`, `dmg-intel`, `dmg-universal` | The release ships a disk image per architecture; the universal targets stay for local use |
+| SwiftDefaults | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The release ships a disk image per architecture |
+| Leader Key | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The tag-triggered workflow ships a disk image per architecture |
+| Wallpaper Selector | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The release ships a disk image per architecture |
+| MenuTitle | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The release ships a disk image per architecture |
+| KBPulse | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The release ships a disk image per architecture |
+| AirBattery | arm64, x86_64 | `app-arm`, `app-intel`, `dmg-arm`, `dmg-intel` | The release ships a disk image per architecture |
+| Spaces Renamer | arm64 | None | Apple silicon only: the injected hook is arm64e, so the app cannot run on Intel |
+| tfm | arm64, x86_64 | None | A command line tool without an application bundle; ships one archive per architecture and platform (macOS, Linux) |
 
 ## The changelog
 
@@ -126,12 +129,13 @@ the workflow, not in the changelog.
 1. A release is cut by pushing a tag `vX.Y.Z` on the default branch. Nothing else starts a release.
 2. The tag is the only source of the version. The build stamps it into the bundle, and the release fails when the bundle reports a different version.
 3. `make test` runs on every push and every pull request, and again inside the release workflow before the build. It checks the changelog shape first; a failing check or test blocks the release.
-4. The release publishes the asset plus a checksum file that sits next to it. The checksum file holds one line per asset: the digest, two spaces, the bare file name.
-5. The name of the checksum file is the name of the asset with `.sha256` added. Two products use `checksums.txt` instead: fluor and spacemap. The name is fixed per product, and the tap reads it from `automation/products.json`.
-6. The tag must sit on the default branch.
-7. The release notes come from the section of the project's own CHANGELOG for that version, extracted with `scripts/changelog.sh notes`. A stable version with no section, or with an empty section, fails the release. The workflow appends a `## Checksums` block generated from the sidecar.
-8. Signing is ad-hoc everywhere: identity `-`, no certificate, no team identifier, no notarization. Notarization is allowed only where a product already holds the secrets, and it never replaces the ad-hoc floor.
-9. Nothing writes into the tap. The daily job of the tap follows the release.
+4. Every release publishes a separate artifact for arm64 and for x86_64. The only exception is a product that cannot run on Intel: it publishes arm64 only, and its cask carries `depends_on arch: :arm64`.
+5. The release publishes the assets plus a checksum file that sits next to them. The checksum file holds one line per asset: the digest, two spaces, the bare file name.
+6. The name of the checksum file is the name of the asset with `.sha256` added. Some products use `checksums.txt` instead: fluor, spacemap, AirBattery, SketchyBar Studio, SwiftDefaults, Wallpaper Selector, MenuTitle, Leader Key, KBPulse and tfm. The name is fixed per product, and the tap reads it from `automation/products.json`.
+7. The tag must sit on the default branch.
+8. The release notes come from the section of the project's own CHANGELOG for that version, extracted with `scripts/changelog.sh notes`. A stable version with no section, or with an empty section, fails the release. The workflow appends a `## Checksums` block generated from the sidecar.
+9. Signing is ad-hoc everywhere: identity `-`, no certificate, no team identifier, no notarization. Notarization is allowed only where a product already holds the secrets, and it never replaces the ad-hoc floor.
+10. Nothing writes into the tap. The daily job of the tap follows the release.
 
 ## The version
 
@@ -173,14 +177,17 @@ The authoritative list of the names per product lives in the tap, in `automation
 
 | Product | Asset | Checksum file |
 |---|---|---|
-| fluor | `Fluor.dmg` | `checksums.txt` |
-| SketchyBar Studio | `SketchyBarStudio-<version>-universal.dmg` | `SketchyBarStudio-<version>-universal.dmg.sha256` |
+| fluor | `Fluor-<version>-arm64.dmg` and `Fluor-<version>-x86_64.dmg` | `checksums.txt` |
+| SketchyBar Studio | `SketchyBarStudio-<version>-arm64.dmg` and `SketchyBarStudio-<version>-x86_64.dmg` | `checksums.txt` |
 | spacemap | `spacemap-<version>-arm64.dmg` and `spacemap-<version>-x86_64.dmg` | `checksums.txt` |
 | Spaces Renamer | `SpacesRenamer-v<version>.dmg` | `SpacesRenamer-v<version>.dmg.sha256` |
-| SwiftDefaults | `SwiftDefaults-<version>.dmg` | `SwiftDefaults-<version>.dmg.sha256` |
-| Leader Key | `LeaderKey-<version>.dmg` | `LeaderKey-<version>.dmg.sha256` |
-| Wallpaper Selector | `WallpaperSelector-<version>.dmg` | `WallpaperSelector-<version>.dmg.sha256` |
-| tfm | `tfm-universal-macos.gz` | `tfm-universal-macos.gz.sha256` |
+| SwiftDefaults | `SwiftDefaults-<version>-arm64.dmg` and `SwiftDefaults-<version>-x86_64.dmg` | `checksums.txt` |
+| Leader Key | `LeaderKey-<version>-arm64.dmg` and `LeaderKey-<version>-x86_64.dmg` | `checksums.txt` |
+| Wallpaper Selector | `WallpaperSelector-<version>-arm64.dmg` and `WallpaperSelector-<version>-x86_64.dmg` | `checksums.txt` |
+| MenuTitle | `MenuTitle-<version>-arm64.dmg` and `MenuTitle-<version>-x86_64.dmg` | `checksums.txt` |
+| AirBattery | `AirBattery-<version>-arm64.dmg` and `AirBattery-<version>-x86_64.dmg` | `checksums.txt` |
+| KBPulse | `KBPulse-<version>-arm64.dmg` and `KBPulse-<version>-x86_64.dmg` | `checksums.txt` |
+| tfm | `tfm-<version>-arm64-macos.gz`, `tfm-<version>-x86_64-macos.gz`, `tfm-<version>-arm64-linux.gz` and `tfm-<version>-x86_64-linux.gz` | `checksums.txt` |
 
 A release that changes the name of an asset needs a change of the pattern in `automation/products.json` first. Otherwise the daily job reports that the release does not hold the file, and it leaves the file of the product in the tap alone.
 
@@ -219,6 +226,7 @@ The workflow never writes into the tap and never touches another repository.
 - `make app` then `make verify` checks the artifact that CI will ship.
 - `make run` installs the app into `~/Applications` and launches it.
 - `make release-artifacts VERSION=1.2.3` builds the assets, verifies the checksum, and the produced files carry the names of the table above.
+- The release carries an arm64 and an x86_64 artifact for every product that can run on Intel. A product that cannot run on Intel carries `depends_on arch: :arm64` in its cask.
 - `make release-notes VERSION=1.2.3` prints the changelog section, and it fails when the section is missing or empty.
 - The names of the produced files and the line of the checksum file are the two things that the tap matches.
 
@@ -226,9 +234,8 @@ The tap checks the same facts from the outside. Its dry run reports the digest o
 
 ## Deviations
 
-- tfm has no `app` and no `dmg`. It is a command line tool, so it has no application bundle and no disk image. It publishes the universal binary only, and `make install` uses its own `install.sh`.
-- SketchyBar Studio has no `app-arm` and no `app-intel`, and no `dmg-arm` and no `dmg-intel`. It ships one universal package, so a per-architecture build would produce an artifact that nobody installs.
-- SwiftDefaults, Wallpaper Selector and Spaces Renamer have no per-architecture target. They are Apple silicon only, so the plain `app` and `dmg` targets build the only artifact they ship.
-- Leader Key is an imported Xcode project. It publishes the same tag, asset and checksum shape, and builds one universal package for Apple silicon and Intel, but it does not yet implement the Makefile targets of this contract.
+- tfm has no `app` and no `dmg`. It is a command line tool, so it has no application bundle and no disk image. It publishes one compressed binary per architecture for macOS and Linux, plus `checksums.txt`; the universal macOS build stays for local use. `make install` uses its own `install.sh`.
+- Spaces Renamer is the only product that cannot run on Intel. The injected hook and its payload are arm64e, so it ships an arm64 image and its cask carries `depends_on arch: :arm64`.
+- Leader Key is an imported Xcode project. Its tag-triggered workflow builds a separate bundle and disk image for each architecture and publishes the same tag, asset and checksum shape. It does not implement the Makefile targets of this contract.
 - spacemap releases a stable `x.y.z` only. The Xcode project stores the version as its build version, which is numeric, so the release target rejects a prerelease suffix.
-- KBPulse follows the development loop, offers the release targets and runs a tag-triggered release workflow, but it is a fork of an upstream repository and is not published through the tap yet.
+- KBPulse is a fork of an upstream repository. It follows the development loop, offers the release targets, runs a tag-triggered release workflow and is published through the tap.

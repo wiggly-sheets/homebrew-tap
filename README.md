@@ -6,6 +6,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 
 | Name | Type | Latest | Description |
 |------|------|--------|-------------|
+| `kbpulse` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/KBPulse?sort=semver&label=release)](https://github.com/wiggly-sheets/KBPulse/releases) | Pulse the keyboard backlight |
 | `leader-key` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/LeaderKey?sort=semver&label=release)](https://github.com/wiggly-sheets/LeaderKey/releases) | Keyboard shortcut launcher with nested leader-key sequences |
 | `wallpaper-selector` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/wallpaper-selector?sort=semver&label=release)](https://github.com/wiggly-sheets/wallpaper-selector/releases) | Native menu-bar wallpaper picker and rotator |
 | `spacesrenamer` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/spaces-renamer?sort=semver&label=release)](https://github.com/wiggly-sheets/spaces-renamer/releases) | Give Spaces persistent names in Mission Control |

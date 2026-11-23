@@ -2,10 +2,13 @@
 
 # Generated from automation/templates/fluor.rb. Edit the template, not this file.
 cask "fluor" do
-  version "VERSION_PLACEHOLDER"
-  sha256 "SHA256_PLACEHOLDER"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/Fluor/releases/download/v#{version}/Fluor.dmg"
+  version "VERSION_PLACEHOLDER"
+  sha256 arm:   "SHA256_ARM_PLACEHOLDER",
+         intel: "SHA256_INTEL_PLACEHOLDER"
+
+  url "https://github.com/wiggly-sheets/Fluor/releases/download/v#{version}/Fluor-#{version}-#{arch}.dmg"
   name "Fluor"
   desc "Make your function keys fit the app you're using"
   homepage "https://github.com/wiggly-sheets/fluor"

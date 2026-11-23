@@ -2,15 +2,17 @@
 
 # Generated from automation/templates/menutitle.rb. Edit the template, not this file.
 cask "menutitle" do
-  version "VERSION_PLACEHOLDER"
-  sha256 "SHA256_PLACEHOLDER"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/menutitle/releases/download/v#{version}/MenuTitle-#{version}.dmg"
+  version "VERSION_PLACEHOLDER"
+  sha256 arm:   "SHA256_ARM_PLACEHOLDER",
+         intel: "SHA256_INTEL_PLACEHOLDER"
+
+  url "https://github.com/wiggly-sheets/menutitle/releases/download/v#{version}/MenuTitle-#{version}-#{arch}.dmg"
   name "MenuTitle"
   desc "Show the focused window title in the menu bar"
   homepage "https://github.com/wiggly-sheets/menutitle"
 
-  depends_on arch: :arm64
   depends_on macos: :sonoma
 
   app "MenuTitle.app"

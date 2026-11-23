@@ -2,7 +2,7 @@
 
 ## What this repository is
 
-This repository is the one Homebrew tap for every wiggly-sheets product. It is the tap `wiggly-sheets/homebrew-tap`, and it holds nine casks under `Casks/` and one formula, `tfm.rb`, at the root of the repository.
+This repository is the one Homebrew tap for every wiggly-sheets product. It is the tap `wiggly-sheets/homebrew-tap`, and it holds ten casks under `Casks/` and one formula, `tfm.rb`, at the root of the repository.
 
 Every cask and every formula in the tap is generated output. The source of truth is the template of the product, `automation/templates/<product>.rb`, together with the entry of the product in `automation/products.json`. The generator that turns the two into a tap file is `automation/sync-tap.sh`.
 
@@ -49,6 +49,7 @@ To start the job by hand, open the Actions tab of the repository, choose the wor
 Keep to these rules in the template of a new product.
 
 - Give a cask for a macOS only application a `depends_on macos: :<release>`. Homebrew reports a cask that has an `app` stanza and no macOS dependency.
+- A product that ships both architectures uses an `arch = on_arch_conditional` segment in the URL and a `sha256 arm:`/`intel:` pair. Only a product that cannot run on Intel uses `depends_on arch: :arm64`.
 - Keep the platform out of the description. "macOS", "Mac OS" and "OS X" in the description of a cask are reported by the style check of Homebrew.
 - Write the zap trash list in alphabetical order.
 - Put a formula in the root of the repository, because this tap has no `Formula` directory. Put the casks in the directory named `Casks`.

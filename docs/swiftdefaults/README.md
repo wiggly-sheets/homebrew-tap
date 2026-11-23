@@ -27,7 +27,7 @@ SwiftDefaults is a native Mac utility for browsing and toggling macOS system def
 ## Requirements
 
 - macOS 15.0 or later
-- Apple Silicon (arm64)
+- Apple Silicon (arm64) and Intel (x86_64)
 - Write access to user defaults (no Full Disk Access, no sandbox entitlements beyond default)
 
 ## Uninstalling

@@ -2,10 +2,13 @@
 
 # Generated from automation/templates/sketchybar-studio.rb. Edit the template, not this file.
 cask "sketchybar-studio" do
-  version "VERSION_PLACEHOLDER"
-  sha256 "SHA256_PLACEHOLDER"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/SketchyBar-Studio/releases/download/v#{version}/SketchyBarStudio-#{version}-universal.dmg"
+  version "VERSION_PLACEHOLDER"
+  sha256 arm:   "SHA256_ARM_PLACEHOLDER",
+         intel: "SHA256_INTEL_PLACEHOLDER"
+
+  url "https://github.com/wiggly-sheets/SketchyBar-Studio/releases/download/v#{version}/SketchyBarStudio-#{version}-#{arch}.dmg"
   name "SketchyBar Studio"
   desc "Preview and edit SketchyBar configs in real time"
   homepage "https://github.com/wiggly-sheets/SketchyBar-Studio"

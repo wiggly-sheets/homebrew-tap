@@ -18,7 +18,7 @@ A native macOS menu-bar wallpaper picker and rotator.
 
 - macOS 13 or later
 - macOS 14 or later for the All Spaces feature
-- Apple Silicon (arm64) only
+- Apple Silicon (arm64) and Intel (x86_64)
 
 ## How the tap stays current
 

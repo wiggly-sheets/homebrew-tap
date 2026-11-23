@@ -2,15 +2,17 @@
 
 # Generated from automation/templates/wallpaper-selector.rb. Edit the template, not this file.
 cask "wallpaper-selector" do
-  version "VERSION_PLACEHOLDER"
-  sha256 "SHA256_PLACEHOLDER"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}.dmg"
+  version "VERSION_PLACEHOLDER"
+  sha256 arm:   "SHA256_ARM_PLACEHOLDER",
+         intel: "SHA256_INTEL_PLACEHOLDER"
+
+  url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}-#{arch}.dmg"
   name "Wallpaper Selector"
   desc "Native menu-bar wallpaper picker and rotator"
   homepage "https://github.com/wiggly-sheets/wallpaper-selector"
 
-  depends_on arch: :arm64
   depends_on macos: :ventura
 
   app "Wallpaper Selector.app"

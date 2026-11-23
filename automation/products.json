@@ -8,8 +8,12 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "Fluor.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "Fluor-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "Fluor-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
       "sidecar": "checksums.txt"
@@ -22,11 +26,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "SketchyBarStudio-{version}-universal.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "SketchyBarStudio-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "SketchyBarStudio-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "SketchyBarStudio-{version}-universal.dmg.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "spacemap",
@@ -68,11 +76,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "SwiftDefaults-{version}.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "SwiftDefaults-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "SwiftDefaults-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "SwiftDefaults-{version}.dmg.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "wallpaper-selector",
@@ -82,11 +94,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "WallpaperSelector-{version}.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "WallpaperSelector-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "WallpaperSelector-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "WallpaperSelector-{version}.dmg.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "tfm",
@@ -96,11 +112,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "tfm-universal-macos.gz",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "tfm-{version}-arm64-macos.gz",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "tfm-{version}-x86_64-macos.gz",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "tfm-universal-macos.gz.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "menutitle",
@@ -110,11 +130,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "MenuTitle-{version}.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "MenuTitle-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "MenuTitle-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "MenuTitle-{version}.dmg.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "air-battery",
@@ -124,11 +148,15 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "AirBattery-{version}.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "AirBattery-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "AirBattery-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "AirBattery-{version}.dmg.sha256"
+      "sidecar": "checksums.txt"
     },
     {
       "name": "leader-key",
@@ -138,11 +166,33 @@
       "version_placeholder": "VERSION_PLACEHOLDER",
       "assets": [
         {
-          "pattern": "LeaderKey-{version}.dmg",
-          "placeholder": "SHA256_PLACEHOLDER"
+          "pattern": "LeaderKey-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "LeaderKey-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
         }
       ],
-      "sidecar": "LeaderKey-{version}.dmg.sha256"
+      "sidecar": "checksums.txt"
+    },
+    {
+      "name": "kbpulse",
+      "repo": "wiggly-sheets/KBPulse",
+      "template": "automation/templates/kbpulse.rb",
+      "target": "Casks/kbpulse.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "KBPulse-{version}-arm64.dmg",
+          "placeholder": "SHA256_ARM_PLACEHOLDER"
+        },
+        {
+          "pattern": "KBPulse-{version}-x86_64.dmg",
+          "placeholder": "SHA256_INTEL_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "checksums.txt"
     }
   ]
 }

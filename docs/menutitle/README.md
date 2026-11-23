@@ -19,7 +19,7 @@ A native menu bar window title. MenuTitle reads the focused window from yabai an
 - macOS 14 or later
 - yabai running with window titles queryable
 - Accessibility access for MenuTitle
-- Apple Silicon (arm64) only
+- Apple Silicon (arm64) and Intel (x86_64)
 
 ## How the tap stays current
 

@@ -2,10 +2,13 @@
 
 # Generated from automation/templates/air-battery.rb. Edit the template, not this file.
 cask "air-battery" do
-  version "VERSION_PLACEHOLDER"
-  sha256 "SHA256_PLACEHOLDER"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/Air-Battery/releases/download/v#{version}/AirBattery-#{version}.dmg"
+  version "VERSION_PLACEHOLDER"
+  sha256 arm:   "SHA256_ARM_PLACEHOLDER",
+         intel: "SHA256_INTEL_PLACEHOLDER"
+
+  url "https://github.com/wiggly-sheets/Air-Battery/releases/download/v#{version}/AirBattery-#{version}-#{arch}.dmg"
   name "AirBattery"
   desc "Show battery levels of all devices in the menu bar, Dock and widgets"
   homepage "https://github.com/wiggly-sheets/Air-Battery"
