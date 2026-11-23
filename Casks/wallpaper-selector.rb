@@ -1,7 +1,7 @@
 # Generated from automation/templates/wallpaper-selector.rb. Edit the template, not this file.
 cask "wallpaper-selector" do
-  version "1.0.0"
-  sha256 "b65449be8b147200525ea53a2342be062012c27d8115bf0c34c0c7b0e309d7da"
+  version "1.1.0"
+  sha256 "e54fa445f3f9085f1e495f920546e20e67114257cc6d94ac2ca29cfe9d1e846e"
 
   url "https://github.com/wiggly-sheets/wallpaper-selector/releases/download/v#{version}/WallpaperSelector-#{version}.dmg"
   name "Wallpaper Selector"
