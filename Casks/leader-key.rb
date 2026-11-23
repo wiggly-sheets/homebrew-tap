@@ -1,14 +1,16 @@
 # Generated from automation/templates/leader-key.rb. Edit the template, not this file.
 cask "leader-key" do
-  version "1.18.0"
-  sha256 "ff1d0fa3b006a346312eb8007cacbb3fa6204f4576acb528787eca14367f492f"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/LeaderKey/releases/download/v#{version}/LeaderKey-#{version}.dmg"
+  version "1.18.2"
+  sha256 arm:   "56d1e235bf7ed2af77aa3f06e5fd57b0c10cb581796b2a267e26ef0108b7369b",
+         intel: "268ee6fe84d66a48af2de4f36c5884f8ec6281ca17e2e4a607ad8ad366cd0b40"
+
+  url "https://github.com/wiggly-sheets/LeaderKey/releases/download/v#{version}/LeaderKey-#{version}-#{arch}.dmg"
   name "Leader Key"
   desc "Keyboard shortcut launcher with nested leader-key sequences"
   homepage "https://github.com/wiggly-sheets/LeaderKey"
 
-  depends_on arch: :arm64
   depends_on macos: :sonoma
 
   app "Leader Key.app"

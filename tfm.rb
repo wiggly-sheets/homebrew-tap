@@ -7,15 +7,22 @@
 class Tfm < Formula
   desc "Mouse-first terminal file manager"
   homepage "https://github.com/wiggly-sheets/tfm-tui-mac"
+  version "1.1.1"
 
-  url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v1.0.0/tfm-universal-macos.gz"
-  sha256 "9f8302503ea03360dba0b28cf409c4993ae0e5fc5670b6780320d23cba0e307e"
+  if Hardware::CPU.arm?
+    url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v#{version}/tfm-#{version}-arm64-macos.gz"
+    sha256 "7e43cb7d90551ee25771af67ad9a04b7c8e2fda6d0e3eb6a18c06c5dcc769609"
+  else
+    url "https://github.com/wiggly-sheets/tfm-tui-mac/releases/download/v#{version}/tfm-#{version}-x86_64-macos.gz"
+    sha256 "12ca2bf2ef946310856e4f75fcce3ba1eb9863ec0d716f5d98944e713e83b07c"
+  end
+
   head "https://github.com/wiggly-sheets/tfm-tui-mac"
 
   depends_on macos: :ventura
 
   def install
-    bin.install "tfm-universal-macos" => "tfm"
+    bin.install Dir["tfm-*macos"].first => "tfm"
   end
 
   test do

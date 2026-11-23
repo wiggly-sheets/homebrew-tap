@@ -1,14 +1,16 @@
 # Generated from automation/templates/swiftdefaults.rb. Edit the template, not this file.
 cask "swiftdefaults" do
-  version "1.1.0"
-  sha256 "af1db3866fbfd903768a1aaa61288c269f3938e155a75072037d6dc526785218"
+  arch = on_arch_conditional arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}.dmg"
+  version "1.1.1"
+  sha256 arm:   "a414743cb804b4f2c5348f648737c5fc653209ec3b9aa697ad2af7488a0c48b4",
+         intel: "03a33ba1d97b6b004b460fd815501526544daec50ff3120ef64cd7a9381deb18"
+
+  url "https://github.com/wiggly-sheets/swiftdefaults/releases/download/v#{version}/SwiftDefaults-#{version}-#{arch}.dmg"
   name "SwiftDefaults"
   desc "GUI for managing defaults"
   homepage "https://github.com/wiggly-sheets/swiftdefaults"
 
-  depends_on arch: :arm64
   depends_on macos: :sequoia
 
   app "SwiftDefaults.app"
