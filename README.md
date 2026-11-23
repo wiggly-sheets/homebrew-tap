@@ -6,6 +6,7 @@ Custom Homebrew tap for wiggly-sheets macOS utilities.
 
 | Name | Type | Latest | Description |
 |------|------|--------|-------------|
+| `leader-key` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/LeaderKey?sort=semver&label=release)](https://github.com/wiggly-sheets/LeaderKey/releases) | Keyboard shortcut launcher with nested leader-key sequences |
 | `wallpaper-selector` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/wallpaper-selector?sort=semver&label=release)](https://github.com/wiggly-sheets/wallpaper-selector/releases) | Native menu-bar wallpaper picker and rotator |
 | `spacesrenamer` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/spaces-renamer?sort=semver&label=release)](https://github.com/wiggly-sheets/spaces-renamer/releases) | Give Spaces persistent names in Mission Control |
 | `sketchybar-studio` | cask | [![release](https://img.shields.io/github/v/release/wiggly-sheets/SketchyBar-Studio?sort=semver&label=release)](https://github.com/wiggly-sheets/SketchyBar-Studio/releases) | Preview and edit SketchyBar configs in real time |
@@ -34,6 +35,7 @@ brew trust wiggly-sheets/homebrew-tap
 Then install any cask or formula:
 
 ```bash
+brew install --cask leader-key
 brew install --cask wallpaper-selector
 brew install --cask spacesrenamer
 brew install --cask sketchybar-studio
@@ -47,6 +49,7 @@ brew install tfm
 
 ## Individual Product Docs
 
+- [leader-key](docs/leader-key/README.md)
 - [wallpaper-selector](docs/wallpaper-selector/README.md)
 - [spacesrenamer](docs/spacesrenamer/README.md)
 - [sketchybar-studio](docs/sketchybar-studio/README.md)
@@ -59,6 +62,7 @@ brew install tfm
 
 ## Project Repositories
 
+- [LeaderKey](https://github.com/wiggly-sheets/LeaderKey)
 - [wallpaper-selector](https://github.com/wiggly-sheets/wallpaper-selector)
 - [spaces-renamer](https://github.com/wiggly-sheets/spaces-renamer)
 - [SketchyBar-Studio](https://github.com/wiggly-sheets/SketchyBar-Studio)

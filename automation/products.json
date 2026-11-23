@@ -129,6 +129,20 @@
         }
       ],
       "sidecar": "AirBattery-{version}.dmg.sha256"
+    },
+    {
+      "name": "leader-key",
+      "repo": "wiggly-sheets/LeaderKey",
+      "template": "automation/templates/leader-key.rb",
+      "target": "Casks/leader-key.rb",
+      "version_placeholder": "VERSION_PLACEHOLDER",
+      "assets": [
+        {
+          "pattern": "LeaderKey-{version}.dmg",
+          "placeholder": "SHA256_PLACEHOLDER"
+        }
+      ],
+      "sidecar": "LeaderKey-{version}.dmg.sha256"
     }
   ]
 }

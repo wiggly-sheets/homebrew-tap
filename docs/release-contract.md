@@ -70,6 +70,7 @@ A product offers a per-architecture target only when it can build that architect
 | spacemap | arm64, x86_64, universal | `app-arm`, `app-intel`, `app-universal`, `dmg-arm`, `dmg-intel`, `dmg-universal` | The release ships a disk image per architecture |
 | SketchyBar Studio | universal | `app-universal`, `dmg-universal` | One universal package |
 | SwiftDefaults | arm64 | None | Apple silicon only |
+| Leader Key | arm64 | None | Apple silicon only |
 | Wallpaper Selector | arm64 | None | Apple silicon only |
 | Spaces Renamer | arm64 | None | Apple silicon only |
 | tfm | universal | None | A command line tool without an application bundle |
@@ -177,6 +178,7 @@ The authoritative list of the names per product lives in the tap, in `automation
 | spacemap | `spacemap-<version>-arm64.dmg` and `spacemap-<version>-x86_64.dmg` | `checksums.txt` |
 | Spaces Renamer | `SpacesRenamer-v<version>.dmg` | `SpacesRenamer-v<version>.dmg.sha256` |
 | SwiftDefaults | `SwiftDefaults-<version>.dmg` | `SwiftDefaults-<version>.dmg.sha256` |
+| Leader Key | `LeaderKey-<version>.dmg` | `LeaderKey-<version>.dmg.sha256` |
 | Wallpaper Selector | `WallpaperSelector-<version>.dmg` | `WallpaperSelector-<version>.dmg.sha256` |
 | tfm | `tfm-universal-macos.gz` | `tfm-universal-macos.gz.sha256` |
 
@@ -227,5 +229,6 @@ The tap checks the same facts from the outside. Its dry run reports the digest o
 - tfm has no `app` and no `dmg`. It is a command line tool, so it has no application bundle and no disk image. It publishes the universal binary only, and `make install` uses its own `install.sh`.
 - SketchyBar Studio has no `app-arm` and no `app-intel`, and no `dmg-arm` and no `dmg-intel`. It ships one universal package, so a per-architecture build would produce an artifact that nobody installs.
 - SwiftDefaults, Wallpaper Selector and Spaces Renamer have no per-architecture target. They are Apple silicon only, so the plain `app` and `dmg` targets build the only artifact they ship.
+- Leader Key is an imported Xcode project. It publishes the same tag, asset and checksum shape, but it does not yet implement the Makefile targets of this contract.
 - spacemap releases a stable `x.y.z` only. The Xcode project stores the version as its build version, which is numeric, so the release target rejects a prerelease suffix.
 - KBPulse follows the development loop, offers the release targets and runs a tag-triggered release workflow, but it is a fork of an upstream repository and is not published through the tap yet.

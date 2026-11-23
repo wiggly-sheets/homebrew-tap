@@ -2,7 +2,7 @@
 
 ## What this repository is
 
-This repository is the one Homebrew tap for every wiggly-sheets product. It is the tap `wiggly-sheets/homebrew-tap`, and it holds seven casks under `Casks/` and one formula, `tfm.rb`, at the root of the repository.
+This repository is the one Homebrew tap for every wiggly-sheets product. It is the tap `wiggly-sheets/homebrew-tap`, and it holds nine casks under `Casks/` and one formula, `tfm.rb`, at the root of the repository.
 
 Every cask and every formula in the tap is generated output. The source of truth is the template of the product, `automation/templates/<product>.rb`, together with the entry of the product in `automation/products.json`. The generator that turns the two into a tap file is `automation/sync-tap.sh`.
 
